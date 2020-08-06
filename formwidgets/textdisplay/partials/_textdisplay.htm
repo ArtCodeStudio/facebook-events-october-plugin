@@ -1,0 +1,37 @@
+
+<div class="">
+    
+    <?php
+        /**
+         * prepair / format data 
+         * There must be a cleaner way ! todo
+         *
+         */
+        if( isset($this->formField->config['function']) )
+        {
+
+            if ($this->formField->config['function'] == '_getAccessToken_isValid')
+            {
+                if ($value){
+                    $value = "valid";
+                }else{
+                    $value = "invalid";
+                }
+            }else{
+
+            }
+
+            if ($this->formField->config['function'] == '_getAccessToken_dataAccessExpiresAt' )
+            {
+                if ($value){
+                    $value = date ( "d-m-Y H:i", $value  );
+                }else{
+                    $value = " 'no token found' ";
+                }
+            }
+        }
+    ?>
+
+    <?= $custom_label ?><?= $value ?>
+</div>
+

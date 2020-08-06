@@ -1,0 +1,10 @@
+columns:
+    app_id:
+        label: ID
+        type: text
+    access_token:
+        label: TOKEN
+        type: text
+    app_secret:
+        label: SECRET
+        type: text

@@ -1,0 +1,67 @@
+fields:
+    app_id:
+        label: 'APP ID'
+        span: auto
+        type: text
+    app_secret:
+        label: 'APP SECRET'
+        span: auto
+        type: text
+    access_token:
+        label: 'APP TOKEN'
+        span: auto
+        type: text
+    include_past_events:
+        label: Include Past Events
+        type: checkbox
+
+    # text_display:
+    #     name: ArtAndCodeStudio\FaceBookEvents\Widgets\TextDisplay
+    #     type: ArtAndCodeStudio\FaceBookEvents\Widgets\TextDisplay
+    acccess_token_section:
+        label: Access Token
+        type: section
+        comment: ""
+    token_is_valid:
+        custom_label: 'Is '
+        class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+        function: _getAccessToken_isValid
+        type: artandcodestudio_textdisplay
+    expires_at:
+        custom_label: 'Expires '
+        class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+        function: _getAccessToken_expiresAt
+        type: artandcodestudio_textdisplay
+    
+    data_acccess_token_section:
+        label: Data Access Token
+        type: section
+        comment: ""
+    data_access_expires_at:
+        custom_label: 'Expires '
+        class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+        function: _getAccessToken_dataAccessExpiresAt
+        type: artandcodestudio_textdisplay
+
+    facebook_backend_routes_section:
+        label: Plugin Routes
+        type: section
+        comment: ""  
+
+    facebook_backend_routes_login:
+        class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK 
+        custom_label: 'Facebook Login Route: '
+        function: _getLoginLink
+        type: artandcodestudio_textdisplay
+
+    facebook_backend_routes_callback:
+        echo_url: "/facebook_callback"    
+        custom_label: 'Facebook Callback Route: '
+        type: artandcodestudio_textdisplay
+
+    
+
+    # expires_in:
+    #     custom_label: 'Expires in: '
+    #     source: "expires_in"
+    #     type: artandcodestudio_textdisplay
