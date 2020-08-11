@@ -24,6 +24,12 @@ class TextDisplay extends FormWidgetBase
     
     /**
      * Prepares the form widget view data
+     * eq:
+     *     token_is_valid:
+     *          custom_label: 'Is '
+     *          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+     *          function: _getAccessToken_isValid
+     *          type: artandcodestudio_textdisplay 
      */
     public function prepareVars()
     {

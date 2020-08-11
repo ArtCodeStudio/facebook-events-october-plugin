@@ -4,10 +4,14 @@
 
 {% for event in __SELF__.events %}
     <h1>{{event.name}}</h1>
-    <p>{{event.description}}</p>
+    <p>{{event.description| default("")}}</p>
     <p>Start {{event.start_time}}</p>
     <p>End: {{event.end_time}}</p>
+    <p><a href="{{event.url}}" target="_blank">open on facebook </a></p>
+
 
     <img style="width:90px" src="{{event.cover.source}}">
 
 {% endfor%}
+
+

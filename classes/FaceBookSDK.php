@@ -3,9 +3,14 @@
 use ArtAndCodeStudio\FaceBookEvents\Classes\SessionHandler;
 use ArtAndCodeStudio\FaceBookEvents\Models\Settings;
 use Facebook\Exception as E;
+use Facebook\Exception\FacebookSDKException;
+use Facebook\Exception\FacebookResponseException;
+use Cms\Classes\Theme;
+use System\Classes\SettingsManager;
 
 class FaceBookSDK
 {
+    private $is_initalized;
     private $app_id;
     private $fb;
     private $access_token;
@@ -13,7 +18,9 @@ class FaceBookSDK
     private $dateStringFormat;
     private $facebook_callback;
     private $backend_url;
-
+    private $event_page_name;
+    private $graph_ql_query_strings;
+    private $include_event_url;
     
     // helper move out -----------------------------------------------------------------------------------
     /**
@@ -65,9 +72,18 @@ class FaceBookSDK
             $permissions = ['email, pages_read_engagement']; 
 
             $loginUrl = $helper->getLoginUrl( $this->facebook_callback, $permissions);
-            echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
+            /**
+             * Show Login Button 
+             */
+            // echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
+
+            /**
+             * Automatic Redirect 
+             */
+            echo "<script>window.location = '".$loginUrl."'</script>";
+
         }else {
-            echo "no appid";
+            echo "Login: Add Facebook App Id and App Secret to Plugin";
         }
     }
 
@@ -153,6 +169,14 @@ class FaceBookSDK
         $result[$key]["description"] = $graphNode['description'];
         $result[$key]["graphEdge"] = $graphEdge;
         /**
+         * Include Event URL ? 
+         */
+        if ($this->include_event_url) 
+        {
+            $result[$key]["url"] = "https://facebook.com/events/" . $graphNode['id'];
+        }
+
+        /**
          * Check if there is a cover available
          */
         if ( isset($graphNode['cover']) ){
@@ -167,72 +191,95 @@ class FaceBookSDK
      */
     public  function getEvents() 
     {
-        try {
-            // Returns a `FacebookFacebookResponse` object
+        if( isset($this->access_token) )
+        {
+            try {
+                
+                 //'/ansolas/events?fields=cover, description,name, start_time, end_time&limit=2&after=QVFIUlpfN2l6X3B4b01RQm1jYk5oZATFoSjI4RmZAhOUFUSlZAaeW9tdUdfVFphbVd2aVU0Q2F2Q1FHb3lra041VDNXRS0zX1lxWjViQ1ZANX0ZAvdVQxOHUyajRB', //Get events and specified fields
+                $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=id, start_time, end_time, ';
 
-             /**
-               * pagination 
-               **/
-              //'/ansolas/events?fields=cover, description,name, start_time, end_time&limit=2&after=QVFIUlpfN2l6X3B4b01RQm1jYk5oZATFoSjI4RmZAhOUFUSlZAaeW9tdUdfVFphbVd2aVU0Q2F2Q1FHb3lra041VDNXRS0zX1lxWjViQ1ZANX0ZAvdVQxOHUyajRB', //Get events and specified fields
-              
-            $response = $this->fb->get(
-              '/ansolas/events?fields=cover, description,name, start_time, end_time', //Get events and specified field
-              $this->access_token
-            );
-           
-            } catch(FacebookExceptionsFacebookResponseException $e) {
-                echo 'Graph returned an error: ' . $e->getMessage();
-                exit;
-            } catch(FacebookExceptionsFacebookSDKException $e) {
-                echo 'Facebook SDK returned an error: ' . $e->getMessage();
-                exit;
-            }
-            $graphEdge = $response->getGraphEdge();
-            $graphEdgeArray = $graphEdge->asArray();
-      
-            $result = array(); // to be rendered in component, will contain filtered result
-            
-        
-            foreach ($graphEdgeArray as $key => $graphNode ) 
-            {
-                $start_time = $graphNode['start_time'];
-                $end_time = $graphNode['end_time'];
-
-                $include_past_events = Settings::get('include_past_events');
-                $event_is_upcoming = $this-> checkIfEventIsUpcoming( $end_time );
-               
-                /**
-                 * Include this event if upcoming 
-                 */
-                if ( $event_is_upcoming )
+                // number of parameters, needed to determine the last element so that we dont add a comma after it
+                $length = count(  $this->graph_ql_query_strings ); 
+                foreach ( $this->graph_ql_query_strings as $key => $query_string ) 
                 {
-                    $result = $this->prepareEventsResult( $result, $graphEdge, $graphNode, $key, $start_time, $end_time );
-                } 
-
-                /**
-                 * Include this event if it is NOT upcoming but past 
-                 */
-                if ( !$event_is_upcoming && $include_past_events)
-                {
-                    $result = $this->prepareEventsResult( $result, $graphEdge, $graphNode, $key, $start_time, $end_time );                 
+                    $graph_ql_query_string .= $query_string;
+                    // Query strings can't have a trailing comma !
+                    if ($key < $length - 1) { 
+                        $graph_ql_query_string .= ' , ';
+                    }
                 }
-            }
+                
+                // $response = $this->fb->get(
+                //   '/ansolas/events?fields=cover, description,name, start_time, end_time', //Get events and specified field
+                //   $this->access_token
+                // );
+                //var_dump($graph_ql_query_string); die;
+                $response = $this->fb->get(
+                    $graph_ql_query_string,
+                    $this->access_token
+                );
             
-            // DEBUG
-            //self::dump($result); die;
+                } catch(Facebook\Exceptions\FacebookResponseException $e) {
+                    echo 'Graph returned an error: ' . $e->getMessage();
+                    exit;
+                } catch(Facebook\Exceptions\FacebookSDKException $e) {
+                    echo 'Facebook SDK returned an error: ' . $e->getMessage();
+                    exit;
+                }
+                $graphEdge = $response->getGraphEdge();
+                $graphEdgeArray = $graphEdge->asArray();
+        
+                //self::dump($graphEdgeArray ); die;
 
-            // PAGINATION 
-           // $nextPage = $this->fb->next($graphEdge);
-            /*  foreach ($nextPage as $status) {
-                //self::dump($status->asArray());
+                /**
+                 * Create Filtered Result array 
+                 * to be rendered in component
+                 */
+                $result = array(); 
+                foreach ($graphEdgeArray as $key => $graphNode ) 
+                {
+
+                    $start_time = $graphNode['start_time'];
+                    $end_time = $graphNode['end_time'];
+                    $include_past_events = Settings::get('include_past_events');
+
+                    $event_is_upcoming = $this-> checkIfEventIsUpcoming( $end_time );
+                
+                    /**
+                     * Include this event if upcoming 
+                     */
+                    if ( $event_is_upcoming )
+                    {
+                        $result = $this->prepareEventsResult( $result, $graphEdge, $graphNode, $key, $start_time, $end_time );
+                    } 
+
+                    /**
+                     * Include this event if it is NOT upcoming but past 
+                     */
+                    if ( !$event_is_upcoming && $include_past_events)
+                    {
+                        $result = $this->prepareEventsResult( $result, $graphEdge, $graphNode, $key, $start_time, $end_time );                 
+                    }
+                }
+                
+                // DEBUG
+                //self::dump($result); die;
+
+                // PAGINATION 
+                // $nextPage = $this->fb->next($graphEdge);
+                /*  foreach ($nextPage as $status) {
+                    //self::dump($status->asArray());
+                }
+                $nextPage = $this->fb->next($graphEdge);
+
+                foreach ($nextPage as $status) {
+                    //self::dump($status->asArray());
+                }*/
+
+                return $result;
+            }else{
+                echo "not logged in";
             }
-            $nextPage = $this->fb->next($graphEdge);
-
-            foreach ($nextPage as $status) {
-                //self::dump($status->asArray());
-            }*/
-
-            return $result;
     }
 
     /**
@@ -327,10 +374,39 @@ class FaceBookSDK
      */
     function __construct()
     {   
+        // //https://octobercms.com/docs/api/system/classes/settingsmanager
+
+        // $theme = Theme::getActiveTheme();
+        // $settingsManager = SettingsManager::instance();
+
+        // $settings = Settings::instance();
+        // self::dump( $settings->attributes );
+     
         $this->backend_url =  "https://".$_SERVER['HTTP_HOST']."/backend/system/settings/update/artandcodestudio/facebookevents/settings"; 
         $this->facebook_callback = "https://".$_SERVER['HTTP_HOST'] ."/facebook_callback";
 
-        //echo $this->facebook_callback; die;
+        $this->event_page_name = Settings::get('event_page_name');
+        $this->include_event_url = Settings::get('include_event_url');
+
+        // Prepare Query String Parts
+        $this->graph_ql_query_strings = array();
+
+        /**
+         * Is there a smarter way ?
+         */
+        if ( Settings::get('include_event_description') )
+        {
+            $this->graph_ql_query_strings[0] = 'description';
+        }
+        if ( Settings::get('include_event_cover') )
+        {
+            $this->graph_ql_query_strings[1] = 'cover';
+        }
+        if ( Settings::get('include_event_name') )
+        {
+            $this->graph_ql_query_strings[2] = 'name';
+        }
+
         /***
          * Check if tehre is a Session running, if not start a new
          * session status:
@@ -338,11 +414,11 @@ class FaceBookSDK
          * _NONE = 1
          * _ACTIVE = 2
          * */  
-        if (session_status() < 2){
+        if (session_status() < 2)
+        {
             session_start();
         }
 
-        
         if ( Settings::get('app_id') && Settings::get('app_secret'))
         { 
             $this->access_token = Settings::get('access_token');
@@ -358,7 +434,7 @@ class FaceBookSDK
             ]);
             
         }else{
-            echo "login first";
+           // echo "Constructor: login first <br>";
         }
     }
 }
