@@ -1,6 +1,6 @@
 plugin:
     name: 'ArtAndCodeStudio.facebookevents::lang.plugin.name'
     description: 'artandcodestudio.facebookevents::lang.plugin.description'
-    author: artandcodestudio
+    author: 'Art+Code Studio'
     icon: oc-icon-facebook
-    homepage: ''
+    homepage: 'https://artandcode.studio/'
