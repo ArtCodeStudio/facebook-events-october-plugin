@@ -1,17 +1,31 @@
+{% for event in __SELF__.events.asArray() %}
 
-{# {{ dump( __SELF__.events) }} #}
+    {% if __SELF__.isUpcoming(event.end_time) or __SELF__.pluginSettings.include_past_events %}
+    
+        {% if __SELF__.pluginSettings.include_event_name %}
+            <h1>{{event.name}}</h1>
+        {% endif %}
 
+        {% if __SELF__.pluginSettings.include_event_description %}
+            <p>{{event.description}}</p>
+        {% endif %}
 
-{% for event in __SELF__.events %}
-    <h1>{{event.name}}</h1>
-    <p>{{event.description| default("")}}</p>
-    <p>Start {{event.start_time}}</p>
-    <p>End: {{event.end_time}}</p>
-    <p><a href="{{event.url}}" target="_blank">open on facebook </a></p>
+        <p>Start {{event.start_time.format('d-m-Y')}}</p>
 
+        <p>End: {{event.end_time.format('d-m-Y')}}</p>
 
-    <img style="width:90px" src="{{event.cover.source}}">
+        {% if  __SELF__.pluginSettings.include_event_url %}
+            <p>
+                <a href="https://facebook.com/events/{{event.id}}" target="_blank">open on facebook </a>
+            </p>
+        {% endif %}
 
-{% endfor%}
+        {% if  __SELF__.pluginSettings.include_event_url %}
+            <img style="width:90px" src="{{event.cover.source}}">
+        {% endif %}
+
+    {% endif %}
+
+{% endfor %} 
 
 

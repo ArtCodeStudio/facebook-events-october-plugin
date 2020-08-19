@@ -6,7 +6,6 @@ use ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK;
 Route::get('/facebook_validate', function () 
 {
     $FB_sdk = new FaceBookSDK();
-    // $FB_sdk->validateToken();
     $FB_sdk->getTokenDetails();
 });
 /**

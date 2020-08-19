@@ -95,13 +95,8 @@ tabs:
         include_event_cover:
             label: Cover Image
             type: checkbox
-            tab: Settings       
+            tab: Settings
         include_event_url:
             label: Event URL
             type: checkbox
-            tab: Settings       
-
-        # expires_in:
-        #     custom_label: 'Expires in: '
-        #     source: "expires_in"
-        #     type: artandcodestudio_textdisplay
+            tab: Settings

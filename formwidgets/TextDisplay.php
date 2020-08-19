@@ -2,7 +2,6 @@
 
 use Backend\Classes\FormWidgetBase;
 use System\Behaviors\SettingsModel;
-//use ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK;
 
 /**
  * TextDisplay Form Widget

@@ -3,3 +3,11 @@
  *
  * You can delete this file if you want
  */
+ #Form-field-Settings-token_is_valid-group, 
+ #Form-field-Settings-acccess_token_section-group,
+ #Form-field-Settings-data_acccess_token_section-group,
+ #Form-field-Settings-facebook_backend_routes_section-group,
+ #Form-field-Settings-facebook_backend_routes_login-group
+ {
+    padding-bottom: 4px;
+ }
