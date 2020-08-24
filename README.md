@@ -4,6 +4,7 @@
 ### 1.) Create a new App
 First we need to create a new Facebook app at developer.facebook.com.  
 Navigate to the My Apps section and add a new app.  
+![](https://github.com/ArtCodeStudio/facebookevents-october-plugin/blob/master/docs/images/Add_new_App.png)
 Choose 'Manage Business Integrations' as app type.  
 The Appname is up to you.  
 Enter your email and set 'Who can use your app to 'Just me,...'  
@@ -28,6 +29,11 @@ Here you select the page you like to use and click 'next'
 Confirm the process by clicking 'done' and 'OK' on the following pages.  
 After that you get redirected to your 'Facebook Events' Plugin Settings.  
 Here you can verify that the APP TOKEN field is no populated as well as the Access and Data Access Token details.  
+
+#### Custom Event Component
+To override the Plugin default component view,  
+copy the ```default.html``` from ```plugins/artandcodestudio/facebookevents/components/eventlist/default.htm```  
+to ```/themes/yourtheme/partials/eventlist/default.htm```
 
 #### Settings
 The settings tab lets you choos which items to include in the Events Component
