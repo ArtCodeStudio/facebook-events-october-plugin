@@ -12,7 +12,7 @@ class Plugin extends PluginBase
         return [
             'name' => 'FaceBook Events',
             'description' => 'Integrates Facebook Page Events',
-            'author' => 'Marc Wensauer (https://artandcode.studio)',
+            'author' => 'Art+Code.studio',
             'icon' => 'icon-facebook'
         ];
     }

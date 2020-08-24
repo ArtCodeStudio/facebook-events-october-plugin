@@ -58,21 +58,21 @@ tabs:
 
         # AVAILABLE PLUGIN ROUTES
         facebook_backend_routes_section:
-            label: Plugin Routes
+            label: Facebook Login
             type: section
             comment: ""
             tab: Setup  
         facebook_backend_routes_login:
             class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK 
-            custom_label: 'Facebook Login Route: '
+            custom_label: ''
             function: _getLoginLink
             type: artandcodestudio_textdisplay
             tab: Setup
-        facebook_backend_routes_callback:
-            echo_url: "/facebook_callback"    
-            custom_label: 'Facebook Callback Route: '
-            type: artandcodestudio_textdisplay
-            tab: Setup
+        # facebook_backend_routes_callback:
+        #     echo_url: "/facebook_callback"    
+        #     custom_label: 'Facebook Callback Route: '
+        #     type: artandcodestudio_textdisplay
+        #     tab: Setup
         
         # SETTINGS 
         acccess_token_section:

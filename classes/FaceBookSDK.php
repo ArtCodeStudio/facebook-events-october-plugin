@@ -47,9 +47,9 @@ class FaceBookSDK
             $helper = $this->fb->getRedirectLoginHelper();
             $permissions = ['email, pages_read_engagement']; 
             $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
-            return '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
+            return '<a href="' . $loginUrl . '">Click here to login</a>';
         }else{
-            return '<a href="/facebook_login">Log in with Facebook!</a>';
+            return '<a href="/facebook_login">Click here to login</a>';
         }
     }
 
