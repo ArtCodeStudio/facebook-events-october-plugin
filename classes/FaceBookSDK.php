@@ -131,6 +131,8 @@ class FaceBookSDK {
       $cacheKey = static::CACHE_PREFIX . $hash;
       $cacheTime = Carbon::now()->addSeconds($this->cache_ttl);
 
+      // returns result from cache, stored under $cacheKey, if exists and not expired
+      // otherwise returns result from encapsulated function and stores it under $cacheKey with expiry set to $cacheTime
       return Cache::remember($cacheKey, $cacheTime, function () {
         try {
           $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=id, start_time, end_time, description, cover, name';
