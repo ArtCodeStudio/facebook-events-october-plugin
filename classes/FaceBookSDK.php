@@ -7,6 +7,8 @@ use Facebook\Exception\FacebookSDKException;
 use Facebook\Exception\FacebookResponseException;
 use Cms\Classes\Theme;
 use System\Classes\SettingsManager;
+use Carbon\Carbon;
+use Cache;
 
 class FaceBookSDK {
   private $is_initalized;
@@ -19,6 +21,8 @@ class FaceBookSDK {
   private $backend_url;
   private $event_page_name;
   private $include_event_url;
+  public const CACHE_PREFIX = 'facebooksdk_';
+
 
   /**
    * Getter for Tokendetails
@@ -62,15 +66,15 @@ class FaceBookSDK {
   /**
    * Converts DateTime object to date string
    */
-  private function convert_DateTime_to_DateString( $dateTime ) {
-    return date_format( $dateTime , $this->dateStringFormat );
+  private function convert_DateTime_to_DateString($dateTime) {
+    return date_format($dateTime , $this->dateStringFormat);
   }
 
   /**
    * Converts DateTime timestamp
    */
-  private function convert_DateTime_to_Timestamp( $dateTime ) {
-    return date_timestamp_get( $dateTime ); 
+  private function convert_DateTime_to_Timestamp($dateTime) {
+    return date_timestamp_get($dateTime); 
   }
 
   /**
@@ -81,7 +85,7 @@ class FaceBookSDK {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper();
       $permissions = ['email, pages_read_engagement']; 
-      $loginUrl = $helper->getLoginUrl( $this->facebook_callback, $permissions);
+      $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
 
       /**
        * Show Login Button 
@@ -123,26 +127,30 @@ class FaceBookSDK {
    */
   public function getEvents() {
     if (isset($this->access_token)) {
-      try {
-        $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=id, start_time, end_time, description, cover, name';
+      $hash = md5($this->event_page_name . '|' . $this->access_token);
+      $cacheKey = static::CACHE_PREFIX . $hash;
+      $cacheTime = Carbon::now()->addSeconds($this->cache_ttl);
 
-        $response = $this->fb->get(
-          $graph_ql_query_string,
-          $this->access_token
-        );
-      } catch(FacebookResponseException $e) {
-        echo 'Graph returned an error: ' . $e->getMessage();
-        exit;
-      } catch(FacebookSDKException $e) {
-        echo 'Facebook SDK returned an error: ' . $e->getMessage();
-        exit;
-      }
-      $graphEdge = $response->getGraphEdge();
-      $graphEdgeArray = $graphEdge->asArray();
-
-      return $graphEdge;
+      return Cache::remember($cacheKey, $cacheTime, function () {
+        try {
+          $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=id, start_time, end_time, description, cover, name';
+          $response = $this->fb->get(
+            $graph_ql_query_string,
+            $this->access_token
+          );
+        } catch(FacebookResponseException $e) {
+          echo 'Graph returned an error: ' . $e->getMessage();
+          exit;
+        } catch(FacebookSDKException $e) {
+          echo 'Facebook SDK returned an error: ' . $e->getMessage();
+          exit;
+        }
+        $graphEdge = $response->getGraphEdge();
+        $graphEdgeArray = $graphEdge->asArray();
+        return $graphEdgeArray;
+      });
     } else {
-      echo "not logged in";
+      return [];
     }
   }
 
@@ -154,7 +162,7 @@ class FaceBookSDK {
    * data_access_expires_at
    */
   public function getTokenDetails() {
-    if (strlen($this->access_token)>0) {
+    if (strlen($this->access_token) > 0) {
       try {
         //`FacebookFacebookResponse` object
         $response = $this->fb->get(
@@ -190,8 +198,8 @@ class FaceBookSDK {
       try {
         // Returns a `FacebookFacebookResponse` object
         $response = $this->fb->get(
-        '/debug_token?input_token='.$this->access_token,
-        $this->access_token
+          '/debug_token?input_token='.$this->access_token,
+          $this->access_token
         );
       } catch(FacebookExceptionsFacebookResponseException $e) {
         echo 'Graph returned an error: ' . $e->getMessage();
@@ -201,10 +209,6 @@ class FaceBookSDK {
         echo 'Facebook SDK returned an error: ' . $e->getMessage();
         exit;
       }
-
-      $graphNode = $response->getGraphNode();
-      $graphArray = $graphNode->asArray();
-
     } else {
       return "no accesstoken";
     }
@@ -218,6 +222,7 @@ class FaceBookSDK {
     $this->facebook_callback = "https://".$_SERVER['HTTP_HOST'] ."/facebook_callback";
     $this->event_page_name = Settings::get('event_page_name');
     $this->include_event_url = Settings::get('include_event_url');
+    $this->cache_ttl = Settings::get('cache_ttl');
 
     /***
      * Check if there is a Session running, if not start a new
