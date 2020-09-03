@@ -1,6 +1,5 @@
 tabs:
-    fields:
-        
+    fields:        
         # GENERAL SETTINGS 
         include_past_events:
           label: Include Past Events
@@ -14,8 +13,8 @@ tabs:
           label: Description
           type: checkbox
           tab: 'General Settings'
-        include_event_cover:
-          label: Cover Image
+        include_event_image:
+          label: Event Image
           type: checkbox
           tab: 'General Settings'
         include_event_url:
