@@ -32,7 +32,7 @@ At the very bottom of your list of already entered events, you will find the but
 If you want to include Events from a Facebook page you have to register a Facebook 'app' for it and enter certain credentials here to authorize your app with the Facebook API server. The steps to complete for this are as follows:
 
 #### 1.) Create a new App
-First, we need to create a new Facebook app at https://developer.facebook.com.
+First, we need to create a new Facebook app at https://developers.facebook.com/docs/apps/.
 Navigate to the 'My Apps' section and add a new app.
 ![](https://github.com/ArtCodeStudio/facebookevents-october-plugin/blob/master/docs/images/Add_new_App.png)
 Choose 'Manage Business Integrations' as the app type.
