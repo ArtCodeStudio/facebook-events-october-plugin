@@ -33,7 +33,7 @@ If you want to include Events from a Facebook page you have to register a Facebo
 
 #### 1.) Create a new App
 First, we need to create a new Facebook app.
-Create an account at https://developers.facebook.com, if you don't have one. Then, from https://developers.facebook.com/docs/apps/, navigate to the 'My Apps' section and add a new app.
+Create an account at https://developers.facebook.com, if you don't have one. Then follow the [Facebook documentation](https://developers.facebook.com/apps/) on how to add a new app.
 ![](https://github.com/ArtCodeStudio/facebookevents-october-plugin/blob/master/docs/images/Add_new_App.png)
 Choose 'Manage Business Integrations' as the app type.
 The app name is up to you.
