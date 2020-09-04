@@ -16,8 +16,8 @@ class EventList extends ComponentBase {
   /**
    *  
    */
-  public function isUpcoming($end_time) {
-    $end_timestamp = date_timestamp_get($end_time);
+  public function isUpcoming($endTime) {
+    $endTimestamp = date_timestamp_get($endTime);
     $interval =  $end_timestamp - time();
     if ($interval > 0) {
       return true;  // yes it is upcoming
