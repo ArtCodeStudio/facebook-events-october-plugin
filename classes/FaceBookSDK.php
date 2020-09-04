@@ -27,25 +27,25 @@ class FaceBookSDK {
   /**
    * Getter for Tokendetails
    */
-  public function _getAccessToken_expiresAt() {
+  public function accessTokenExpiresAt() {
     return $this->getTokenDetails()['expires_at'];
   }
-  public function _getAccessToken_isValid() {
+  public function accessTokenIsValid() {
     return $this->getTokenDetails()['is_valid'];
   }
-  public function _getAccessToken_dataAccessExpiresAt() {
+  public function accessTokenDataAccessExpiresAt() {
     return $this->getTokenDetails()['data_access_expires_at'];
   }
 
   /***
    * Returns Login Link
    */
-  public function _getLoginLink() {
+  public function getLoginLink() {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper();
       $permissions = ['email, pages_read_engagement']; 
       $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
-      return '<a href="' . $loginUrl . '">Click here to login</a>';
+      return '<a href="' . getLoginURL() . '">Click here to login</a>';
     } else {
       return '<a href="/facebook_login">Click here to login</a>';
     }
@@ -54,7 +54,7 @@ class FaceBookSDK {
   /***
    * Returns Login URL, no HTML element
    */
-  public function _getLoginURL() {
+  public function getLoginURL() {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper();
       $permissions = ['email, pages_read_engagement']; 
