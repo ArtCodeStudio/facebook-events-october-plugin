@@ -1,102 +1,114 @@
 tabs:
-    fields:
+    fields:        
+        # GENERAL SETTINGS 
+        include_past_events:
+          label: Include Past Events
+          type: checkbox
+          tab: 'General Settings'
+        include_event_name:
+          label: Name
+          type: checkbox
+          tab: 'General Settings'
+        include_event_description:
+          label: Description
+          type: checkbox
+          tab: 'General Settings'
+        include_event_image:
+          label: Event Image
+          type: checkbox
+          tab: 'General Settings'
+        include_event_url:
+          label: Event URL
+          type: checkbox
+          tab: 'General Settings'
+
+        # MANUAL EVENTS
+        events:
+          label: Events
+          type: repeater
+          form: $/artandcodestudio/facebookevents/models/settings/event.yaml
+          tab: 'Manual Events'
+
+        include_facebook_events:
+          label: Include Facebook Events
+          type: checkbox
+          tab: 'Facebook Setup'
+        cache_ttl:
+          label: Event Cache TTL
+          type: number
+          default: 600
+          comment: 'How long Events from Facebook should be cached (to reduce the number of API requests to Facebook - default: 600s = 10m)'
+          tab: 'Facebook Setup'
         # CREDENTIALS
         app_id:
-            label: 'APP ID'
-            span: auto
-            type: text
-            tab: Setup
+          label: 'APP ID'
+          span: auto
+          type: text
+          tab: 'Facebook Setup'
         app_secret:
-            label: 'APP SECRET'
-            span: auto
-            type: text
-            tab: Setup
+          label: 'APP SECRET'
+          span: auto
+          type: text
+          tab: 'Facebook Setup'
         event_page_name:
-            label: 'EVENT PAGE NAME'
-            span: auto
-            type: text
-            tab: Setup
+          label: 'EVENT PAGE NAME'
+          span: auto
+          type: text
+          tab: 'Facebook Setup'
 
         # GENERATED APP TOKEN
         access_token:
-            label: 'APP TOKEN'
-            span: auto
-            type: text
-            tab: Setup
+          label: 'APP TOKEN'
+          span: auto
+          type: text
+          tab: 'Facebook Setup'
 
         # ACCESS TOKEN INFO
         acccess_token_section:
-            label: Access Token
-            type: section
-            comment: ""
-            tab: Setup
+          label: Access Token
+          type: section
+          comment: ""
+          tab: 'Facebook Setup'
         token_is_valid:
-            custom_label: 'Is '
-            class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
-            function: _getAccessToken_isValid
-            type: artandcodestudio_textdisplay
-            tab: Setup
+          custom_label: 'Is '
+          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+          function: accessTokenIsValid
+          type: artandcodestudio_textdisplay
+          tab: 'Facebook Setup'
         expires_at:
-            custom_label: 'Expires '
-            class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
-            function: _getAccessToken_expiresAt
-            type: artandcodestudio_textdisplay
-            tab: Setup
+          custom_label: 'Expires '
+          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+          function: accessTokenExpiresAt
+          type: artandcodestudio_textdisplay
+          tab: 'Facebook Setup'
 
         # DATA ACCESS TOKEN INFO
         data_acccess_token_section:
-            label: Data Access Token
-            type: section
-            comment: ""
-            tab: Setup
+          label: Data Access Token
+          type: section
+          comment: ""
+          tab: 'Facebook Setup'
         data_access_expires_at:
-            custom_label: 'Expires '
-            class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
-            function: _getAccessToken_dataAccessExpiresAt
-            type: artandcodestudio_textdisplay
-            tab: Setup
+          custom_label: 'Expires '
+          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+          function: accessTokenDataAccessExpiresAt
+          type: artandcodestudio_textdisplay
+          tab: 'Facebook Setup'
 
         # AVAILABLE PLUGIN ROUTES
         facebook_backend_routes_section:
-            label: Facebook Login
-            type: section
-            comment: ""
-            tab: Setup  
+          label: Facebook Login
+          type: section
+          comment: ""
+          tab: 'Facebook Setup'  
         facebook_backend_routes_login:
-            class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK 
-            custom_label: ''
-            function: _getLoginLink
-            type: artandcodestudio_textdisplay
-            tab: Setup
+          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK 
+          custom_label: ''
+          function: getLoginLink
+          type: artandcodestudio_textdisplay
+          tab: 'Facebook Setup'
         # facebook_backend_routes_callback:
         #     echo_url: "/facebook_callback"    
         #     custom_label: 'Facebook Callback Route: '
         #     type: artandcodestudio_textdisplay
         #     tab: Setup
-        
-        # SETTINGS 
-        acccess_token_section:
-            label: Settings
-            type: section
-            comment: ""
-            tab: Settings
-        include_past_events:
-            label: Past Events
-            type: checkbox
-            tab: Settings
-        include_event_name:
-            label: Name
-            type: checkbox
-            tab: Settings
-        include_event_description:
-            label: Description
-            type: checkbox
-            tab: Settings
-        include_event_cover:
-            label: Cover Image
-            type: checkbox
-            tab: Settings
-        include_event_url:
-            label: Event URL
-            type: checkbox
-            tab: Settings
