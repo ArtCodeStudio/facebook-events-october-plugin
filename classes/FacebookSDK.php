@@ -26,14 +26,23 @@ class FacebookSDK {
   /**
    * Getter for Tokendetails
    */
+  public function getTokenDetail($key) {
+    $tokenDetails = $this->getTokenDetails();
+    if (isset($tokenDetails[$key])) {
+      return $tokenDetails[$key];
+    } else if (isset($tokenDetails['error'])) {
+      return 'Error: '.$tokenDetails['error'];
+    }
+  }
+
   public function accessTokenExpiresAt() {
-    return $this->getTokenDetails()['expires_at'];
+    return $this->getTokenDetail('expires_at');
   }
   public function accessTokenIsValid() {
-    return $this->getTokenDetails()['is_valid'];
+    return $this->getTokenDetail('is_valid');
   }
   public function accessTokenDataAccessExpiresAt() {
-    return $this->getTokenDetails()['data_access_expires_at'];
+    return $this->getTokenDetail('data_access_expires_at');
   }
 
   /***
@@ -44,7 +53,7 @@ class FacebookSDK {
       $helper = $this->fb->getRedirectLoginHelper();
       $permissions = ['email, pages_read_engagement']; 
       $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
-      return '<a href="' . getLoginURL() . '">Click here to login</a>';
+      return '<a href="' . $this->getLoginURL() . '">Click here to login</a>';
     } else {
       return '<a href="/facebook_login">Click here to login</a>';
     }
@@ -108,8 +117,6 @@ class FacebookSDK {
     $helper = $this->fb->getRedirectLoginHelper();
     try {
       $accessToken = $helper->getAccessToken();
-      Settings::set('access_token', (string)$accessToken);
-      echo "<script>window.location = '".$this->backend_url."'</script>";
     } catch (FacebookResponseException $e) {
       // When Graph returns an error
       echo 'Graph returned an error: ' . $e->getMessage();
@@ -118,6 +125,16 @@ class FacebookSDK {
       // When validation fails or other local issues
       echo 'Facebook SDK returned an error: ' . $e->getMessage();
       exit;
+    }
+    if (isset($accessToken)) {
+      Settings::set('access_token', (string)$accessToken);
+      echo "<script>window.location = '".$this->backend_url."'</script>";
+    } else {
+      $error = $helper->getError();
+      if ($error) {
+        echo "FacebookSDK error: " . $error->getMessage() . "</script>";
+        exit;
+      }
     }
   }
 
@@ -139,9 +156,6 @@ class FacebookSDK {
             $graph_ql_query_string,
             $this->access_token
           );
-        } catch (FacebookResponseException $e) {
-          echo 'Graph returned an error: ' . $e->getMessage();
-          exit;
         } catch (FacebookSDKException $e) {
           echo 'Facebook SDK returned an error: ' . $e->getMessage();
           exit;
@@ -171,17 +185,20 @@ class FacebookSDK {
           $this->access_token
         );
       } catch (FacebookSDKException $e) {
-        echo 'Facebook SDK returned an error: ' . $e->getMessage();
-        exit;
+        $error = 'FacebookSDK error: ' . $e->getMessage();
+        return array (
+          "error" => $error
+        );
       }
       $graphNode = $response->getGraphNode();
       $graphArray = $graphNode->asArray();
-      $expires_at = $this->convert_DateTime_to_DateString($graphArray["expires_at"]);
+      $expiresAt = $this->convert_DateTime_to_DateString($graphArray["expires_at"]);
+      $dataAccessExpiresAt = $this->convert_DateTime_to_DateString($graphArray["data_access_expires_at"]);
 
       $filtered_result = array(
         "is_valid" => $graphArray["is_valid"],
-        "expires_at" =>   $expires_at ? $expires_at : "never",
-        "data_access_expires_at" => $graphArray["data_access_expires_at"],
+        "expires_at" => $expiresAt ? $expiresAt : "never",
+        "data_access_expires_at" => $dataAccessExpiresAt ? $dataAccessExpiresAt : "never",
       );
       return $filtered_result;
     }
