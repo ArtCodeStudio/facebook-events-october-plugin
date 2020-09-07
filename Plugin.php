@@ -46,7 +46,7 @@ class Plugin extends PluginBase
     public function registerFormWidgets()
     {
         return [
-            'ArtAndCodeStudio\FacebookEvents\FormWidgets\TextDisplay' => 'artandcodestudio_textdisplay',
+            'ArtAndCodeStudio\FacebookEvents\FormWidgets\AccessTokenInfo' => 'artandcodestudio_accesstokeninfo',
         ];
     }
 

@@ -9,6 +9,7 @@ use Cms\Classes\Theme;
 use System\Classes\SettingsManager;
 use Carbon\Carbon;
 use Cache;
+use \DateTime;
 
 class FacebookSDK {
   private $app_id;
@@ -30,7 +31,7 @@ class FacebookSDK {
     if (isset($tokenDetails[$key])) {
       return $tokenDetails[$key];
     } else if (isset($tokenDetails['error'])) {
-      return 'Error: '.$tokenDetails['error'];
+      return $tokenDetails['error'];
     }
   }
 
@@ -50,8 +51,7 @@ class FacebookSDK {
   public function getLoginLink() {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper();
-      $permissions = ['email, pages_read_engagement']; 
-      $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
+      $permissions = ['email, pages_read_engagement'];
       return '<a href="' . $this->getLoginURL() . '">Click here to login</a>';
     } else {
       return '<a href="/facebook_login">Click here to login</a>';
@@ -73,15 +73,29 @@ class FacebookSDK {
   /**
    * Converts DateTime object to date string
    */
-  private function convert_DateTime_to_DateString($dateTime) {
+  private function convertDatetimeToDatestring($dateTime) {
     return date_format($dateTime , $this->dateStringFormat);
   }
 
   /**
-   * Converts DateTime timestamp
+   * Converts DateTime to timestamp
    */
-  private function convert_DateTime_to_Timestamp($dateTime) {
+  private function convertDatetimeToTimestamp($dateTime) {
     return date_timestamp_get($dateTime); 
+  }
+
+  /**
+   * Converts timestamp to DateTime
+   */
+  private function convertTimestampToDatetime($timestamp) {
+    return new DateTime('@' . $timestamp); 
+  }
+
+  /**
+   * Converts timestamp to date string
+   */
+  private function convertTimestampToDatestring($timestamp) {
+    return $this->convertDatetimeToDatestring($this->convertTimestampToDatetime($timestamp));
   }
 
   /**
@@ -131,7 +145,7 @@ class FacebookSDK {
     } else {
       $error = $helper->getError();
       if ($error) {
-        echo "FacebookSDK error: " . $error->getMessage() . "</script>";
+        echo "FacebookSDK error: " . $error;
         exit;
       }
     }
@@ -184,15 +198,14 @@ class FacebookSDK {
           $this->access_token
         );
       } catch (FacebookSDKException $e) {
-        $error = 'FacebookSDK error: ' . $e->getMessage();
         return array (
-          "error" => $error
+          "error" => $e->getMessage()
         );
       }
       $graphNode = $response->getGraphNode();
       $graphArray = $graphNode->asArray();
-      $expiresAt = $this->convert_DateTime_to_DateString($graphArray["expires_at"]);
-      $dataAccessExpiresAt = $this->convert_DateTime_to_DateString($graphArray["data_access_expires_at"]);
+      $expiresAt = $this->convertDatetimeToDatestring($graphArray["expires_at"]);
+      $dataAccessExpiresAt = $this->convertTimestampToDatestring($graphArray["data_access_expires_at"]);
 
       $filtered_result = array(
         "is_valid" => $graphArray["is_valid"],
@@ -207,8 +220,9 @@ class FacebookSDK {
    * Anything starts here
    */
   function __construct() {
-    $this->backend_url =  "https://".$_SERVER['HTTP_HOST']."/backend/system/settings/update/artandcodestudio/facebookevents/settings"; 
-    $this->facebook_callback = "https://".$_SERVER['HTTP_HOST'] ."/facebook_callback";
+    $protocol = isset($_SERVER['HTTPS']) ? "https" : "http";
+    $this->backend_url =  $protocol . "://".$_SERVER['HTTP_HOST']."/backend/system/settings/update/artandcodestudio/facebookevents/settings"; 
+    $this->facebook_callback = $protocol . "://".$_SERVER['HTTP_HOST'] ."/facebook_callback";
     $this->event_page_name = Settings::get('event_page_name');
     $this->cache_ttl = Settings::get('cache_ttl');
 
@@ -234,8 +248,6 @@ class FacebookSDK {
         'app_secret' => $this->app_secret,
         'default_graph_version' => 'v2.10'
       ]);
-    } else {
-      echo "please login to facebook";
     }
   }
 }
