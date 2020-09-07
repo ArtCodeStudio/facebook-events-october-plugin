@@ -1,6 +1,5 @@
 <?php namespace ArtAndCodeStudio\FacebookEvents\Classes;
 
-use ArtAndCodeStudio\FacebookEvents\Classes\SessionHandler;
 use ArtAndCodeStudio\FacebookEvents\Models\Settings;
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookSDKException;
