@@ -20,7 +20,6 @@ class FaceBookSDK {
   private $facebook_callback;
   private $backend_url;
   private $event_page_name;
-  private $include_event_url;
   public const CACHE_PREFIX = 'facebooksdk_';
 
 
@@ -223,7 +222,6 @@ class FaceBookSDK {
     $this->backend_url =  "https://".$_SERVER['HTTP_HOST']."/backend/system/settings/update/artandcodestudio/facebookevents/settings"; 
     $this->facebook_callback = "https://".$_SERVER['HTTP_HOST'] ."/facebook_callback";
     $this->event_page_name = Settings::get('event_page_name');
-    $this->include_event_url = Settings::get('include_event_url');
     $this->cache_ttl = Settings::get('cache_ttl');
 
     /***
