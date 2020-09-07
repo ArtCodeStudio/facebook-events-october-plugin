@@ -49,7 +49,11 @@ class EventList extends ComponentBase {
   public function events() {
     // get manually created events from Settings
     $settings = $this->pluginSettings();
-    $events = $settings['events'];
+    $events = array();
+
+    if ($settings['include_manual_events'] && isset($settings['events'])) {
+      $events = array_merge($events, $settings['events']);
+    }
 
     foreach ($events as &$e) {
       // convert event times to times to DateTime objects (so they are of equal type with Facebook Events)
@@ -72,7 +76,9 @@ class EventList extends ComponentBase {
           $e['external_url'] = 'https://facebook.com/events/'.$e['id'];
         }
       }
-      $events = array_merge($events, $fbEvents);
+      if (isset($fbEvents)) {
+        $events = array_merge($events, $fbEvents);
+      }
     }
 
     // Sort events by start_time, descending order
