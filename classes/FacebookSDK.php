@@ -2,9 +2,10 @@
 
 use ArtAndCodeStudio\FacebookEvents\Classes\SessionHandler;
 use ArtAndCodeStudio\FacebookEvents\Models\Settings;
-use Facebook\Exception as E;
-use Facebook\Exception\FacebookSDKException;
-use Facebook\Exception\FacebookResponseException;
+use Facebook\Facebook;
+use Facebook\Exceptions\FacebookSDKException;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookAuthenticationException;
 use Cms\Classes\Theme;
 use System\Classes\SettingsManager;
 use Carbon\Carbon;
@@ -109,11 +110,11 @@ class FacebookSDK {
       $accessToken = $helper->getAccessToken();
       Settings::set('access_token', (string)$accessToken);
       echo "<script>window.location = '".$this->backend_url."'</script>";
-    } catch(FacebookResponseException $e) {
+    } catch (FacebookResponseException $e) {
       // When Graph returns an error
       echo 'Graph returned an error: ' . $e->getMessage();
       exit;
-    } catch(FacebookSDKException $e) {
+    } catch (FacebookSDKException $e) {
       // When validation fails or other local issues
       echo 'Facebook SDK returned an error: ' . $e->getMessage();
       exit;
@@ -138,10 +139,10 @@ class FacebookSDK {
             $graph_ql_query_string,
             $this->access_token
           );
-        } catch(FacebookResponseException $e) {
+        } catch (FacebookResponseException $e) {
           echo 'Graph returned an error: ' . $e->getMessage();
           exit;
-        } catch(FacebookSDKException $e) {
+        } catch (FacebookSDKException $e) {
           echo 'Facebook SDK returned an error: ' . $e->getMessage();
           exit;
         }
@@ -169,10 +170,7 @@ class FacebookSDK {
           '/debug_token?input_token='.$this->access_token,
           $this->access_token
         );
-      } catch(FacebookExceptionsFacebookResponseException $e) {
-        echo 'Graph returned an error: ' . $e->getMessage();
-        exit;
-      } catch(FacebookExceptionsFacebookSDKException $e) {
+      } catch (FacebookSDKException $e) {
         echo 'Facebook SDK returned an error: ' . $e->getMessage();
         exit;
       }
@@ -186,31 +184,6 @@ class FacebookSDK {
         "data_access_expires_at" => $graphArray["data_access_expires_at"],
       );
       return $filtered_result;
-    }
-  }
-
-  /**
-   * Validates is access token is still valid, if not redirect  
-   * https://developers.facebook.com/docs/graph-api/reference/v7.0/debug_token
-   */
-  public function validateToken() {
-    if (isset($this->access_token)) {
-      try {
-        // Returns a `FacebookFacebookResponse` object
-        $response = $this->fb->get(
-          '/debug_token?input_token='.$this->access_token,
-          $this->access_token
-        );
-      } catch(FacebookExceptionsFacebookResponseException $e) {
-        echo 'Graph returned an error: ' . $e->getMessage();
-        exit;
-
-      } catch(FacebookExceptionsFacebookSDKException $e) {
-        echo 'Facebook SDK returned an error: ' . $e->getMessage();
-        exit;
-      }
-    } else {
-      return "no accesstoken";
     }
   }
 
@@ -240,7 +213,7 @@ class FacebookSDK {
       $this->app_secret = Settings::get('app_secret');
       $this->dateStringFormat = "d-m-Y H:i:s";
 
-      $this->fb = new \Facebook\Facebook([
+      $this->fb = new Facebook([
         'app_id' =>  $this->app_id, 
         'app_secret' => $this->app_secret,
         'default_graph_version' => 'v2.10'
