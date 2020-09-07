@@ -1,4 +1,5 @@
 {% for event in __SELF__.events %}
+  <pre><code>{{ event | json_encode(constant('JSON_PRETTY_PRINT')) }}</code></pre>
 
   {% if __SELF__.isUpcoming(event.end_time) or __SELF__.pluginSettings.include_past_events %}
   

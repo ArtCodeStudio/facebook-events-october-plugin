@@ -5,7 +5,7 @@ use Model;
 /**
  * Model
  */
-class Settings extends Model
+class ManualEventsSettings extends Model
 {
     use \October\Rain\Database\Traits\Validation;
     
@@ -13,7 +13,7 @@ class Settings extends Model
      * Register Plugin Setting in teh main Settings Sidebar
      */
     public $implement = ['System.Behaviors.SettingsModel'];
-    public $settingsCode = 'artandcodestudio_facebookevent_settings';
+    public $settingsCode = 'artandcodestudio_facebookevent_manualeventsettings';
     public $settingsFields = 'fields.yaml';
 
     /*
@@ -26,7 +26,7 @@ class Settings extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'artandcodestudio_facebookevents_settings';
+    public $table = 'artandcodestudio_facebookevents_manualeventssettings';
 
     /**
      * @var array Validation rules

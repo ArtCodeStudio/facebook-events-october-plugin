@@ -164,13 +164,16 @@ class FacebookSDK {
       // otherwise returns result from encapsulated function and stores it under $cacheKey with expiry set to $cacheTime
       return Cache::remember($cacheKey, $cacheTime, function () {
         try {
-          $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=id, start_time, end_time, description, cover, name';
+          $defaultFields = "id, start_time, end_time, description, cover, name";
+          $fields = "id, attending_count, can_guests_invite, category, cover, declined_count, description, discount_code_enabled, end_time, event_times, guest_list_enabled, interested_count, is_canceled, is_draft, is_online, is_page_owned, maybe_count, name, noreply_count, online_event_format, online_event_third_party_url, owner, parent_group, place, scheduled_publish_time, start_time, ticket_uri, ticket_uri_start_sales_time, ticketing_privacy_uri, ticketing_terms_uri, timezone, type, updated_time";
+          $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=' . $fields; //id, start_time, end_time, description, cover, name';
           $response = $this->fb->get(
             $graph_ql_query_string,
             $this->access_token
           );
         } catch (FacebookSDKException $e) {
           echo 'Facebook SDK returned an error: ' . $e->getMessage();
+          echo 'Query String: '.$graph_ql_query_string;
           exit;
         }
         $graphEdge = $response->getGraphEdge();

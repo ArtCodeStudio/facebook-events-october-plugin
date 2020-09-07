@@ -1,44 +1,46 @@
 tabs:
     fields:        
         # GENERAL SETTINGS 
-        include_past_events:
-          label: Include Past Events
-          type: checkbox
-          tab: 'General Settings'
-        include_event_name:
-          label: Name
-          type: checkbox
-          tab: 'General Settings'
-        include_event_description:
-          label: Description
-          type: checkbox
-          tab: 'General Settings'
-        include_event_image:
-          label: Event Image
-          type: checkbox
-          tab: 'General Settings'
-        include_event_url:
-          label: Event URL
-          type: checkbox
-          tab: 'General Settings'
-
-        # MANUAL EVENTS
-        events:
-          label: Events
-          type: repeater
-          form: $/artandcodestudio/facebookevents/models/settings/event.yaml
-          tab: 'Manual Events'
-
         include_facebook_events:
           label: Include Facebook Events
           type: checkbox
-          tab: 'Facebook Setup'
+          default: 1
+          tab: 'General Settings'
         cache_ttl:
           label: Event Cache TTL
           type: number
           default: 600
           comment: 'How long Events from Facebook should be cached (to reduce the number of API requests to Facebook - default: 600s = 10m)'
           tab: 'Facebook Setup'
+
+        include_past_events:
+          label: Include Past Events
+          type: checkbox
+          default: 1
+          tab: 'General Settings'
+        include_event_name:
+          label: Name
+          type: checkbox
+          default: 1
+          tab: 'General Settings'
+        include_event_description:
+          label: Description
+          type: checkbox
+          default: 1
+          tab: 'General Settings'
+        include_event_image:
+          label: Event Image
+          type: checkbox
+          default: 1
+          tab: 'General Settings'
+        include_event_url:
+          label: Event URL
+          type: checkbox
+          default: 1
+          tab: 'General Settings'
+
+        # FACEBOOK SETUP
+
         # CREDENTIALS
         app_id:
           label: 'APP ID'
@@ -68,7 +70,7 @@ tabs:
         access_token_section:
           label: Access Token Info
           type: section
-          comment: ""
+          commentAbove: "Enter App ID, App Secret and Event Page Name"
           tab: 'Facebook Setup'
         access_token_info:
           type: artandcodestudio_accesstokeninfo

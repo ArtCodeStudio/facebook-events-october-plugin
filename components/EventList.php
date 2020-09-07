@@ -65,8 +65,12 @@ class EventList extends ComponentBase {
       $fbEvents = $FB_sdk->getEvents();
       foreach ($fbEvents as &$e) {
         // same interface as for manually created events
-        $e['image'] = $e['cover']['source'];
-        $e['external_url'] = 'https://facebook.com/events/'.$e['id'];
+        if (isset($e['cover'])) {
+          $e['image'] = $e['cover']['source'];
+        }
+        if (isset($e['id'])) {
+          $e['external_url'] = 'https://facebook.com/events/'.$e['id'];
+        }
       }
       $events = array_merge($events, $fbEvents);
     }

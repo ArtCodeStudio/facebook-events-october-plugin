@@ -40,6 +40,14 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-facebook',
                 'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\Settings',
                 'order'       => 500,
+            ],
+
+            'manualEvents' => [
+              'label'       => 'Manual Events',
+              'description' => 'Manage Manual Events Settings',
+              'icon'        => 'icon-facebook',
+              'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\ManualEventsSettings',
+              'order'       => 500,
             ]
         ];
     }

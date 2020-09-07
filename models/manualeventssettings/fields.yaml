@@ -1,0 +1,64 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+  include_manual_events:
+    label: Include Manual Events
+    type: checkbox
+    tab: 'General Settings'
+    default: 1
+  events:
+    label: Events
+    type: repeater
+    form:
+        fields:
+          description_section:
+            type: section
+            label: 'Description'
+          name:
+            type: text
+            label: Name
+            span: left
+            placeholder: Name
+            required: 1
+            commentHtml: true
+            commentAbove: 'title of the Event <b>(required)</b>'
+          description:
+            type: textarea
+            label: Description
+            span: right
+            commentHtml: true
+            commentAbove: 'Description of the event (HTML is allowed)'
+          image:
+            type: mediafinder
+            mode: image
+            label: Image
+            span: left
+            commentAbove: 'Add an image for the event.'
+          external_url:
+            type: text
+            label: External URL
+            span: full
+            placeholder: http://hmpg.net
+            commentAbove: 'Link to an external Event page (optional)'
+
+          time_section:
+            type: section
+            label: 'Time'
+          start_time:
+            type: datepicker
+            mode: dateTime
+            label: 'Starting time'
+            span: left
+            required: 1
+            commentHtml: true
+            comment: 'Date/Time for the start of the event (<b>required</b>)<br><br><b>Attention:</b> Please choose a date <b>and</b> a time. Otherwise, the current date, or the current time will be filled in.'
+          end_time:
+            type: datepicker
+            mode: datetime
+            label: 'Ending time'
+            span: right
+            required: 0
+            commentHtml: true
+            comment: 'Date/Time for the end of the event (<b>optional</b>)<br><br><b>Attention:</b> Please choose a date <b>and</b> a time. Otherwise, the current date, or the current time will be filled in.'
