@@ -1,5 +1,6 @@
 <?php namespace ArtAndCodeStudio\FacebookEvents\Components;
 use ArtAndCodeStudio\FacebookEvents\Models\Settings;
+use ArtAndCodeStudio\FacebookEvents\Models\ManualEventsSettings;
 use Cms\Classes\ComponentBase;
 use Config;
 use ArtAndCodeStudio\FacebookEvents\Classes\FacebookSDK;
@@ -18,7 +19,7 @@ class EventList extends ComponentBase {
    */
   public function isUpcoming($endTime) {
     $endTimestamp = date_timestamp_get($endTime);
-    $interval =  $end_timestamp - time();
+    $interval =  $endTimestamp - time();
     if ($interval > 0) {
       return true;  // yes it is upcoming
     } else {
@@ -38,7 +39,7 @@ class EventList extends ComponentBase {
    * and on the page {{component.pluginSettings}}
    */
   public function pluginSettings() {
-    return Settings::instance()->value;
+    return array_merge(Settings::instance()->value, ManualEventsSettings::instance()->value);
   }
 
   /**
