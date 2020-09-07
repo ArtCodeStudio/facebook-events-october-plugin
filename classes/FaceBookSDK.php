@@ -1,7 +1,7 @@
-<?php namespace ArtAndCodeStudio\FaceBookEvents\Classes;
+<?php namespace ArtAndCodeStudio\FacebookEvents\Classes;
 
-use ArtAndCodeStudio\FaceBookEvents\Classes\SessionHandler;
-use ArtAndCodeStudio\FaceBookEvents\Models\Settings;
+use ArtAndCodeStudio\FacebookEvents\Classes\SessionHandler;
+use ArtAndCodeStudio\FacebookEvents\Models\Settings;
 use Facebook\Exception as E;
 use Facebook\Exception\FacebookSDKException;
 use Facebook\Exception\FacebookResponseException;
@@ -10,8 +10,7 @@ use System\Classes\SettingsManager;
 use Carbon\Carbon;
 use Cache;
 
-class FaceBookSDK {
-  private $is_initalized;
+class FacebookSDK {
   private $app_id;
   private $fb;
   private $access_token;

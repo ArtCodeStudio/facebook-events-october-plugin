@@ -1,11 +1,11 @@
-<?php namespace ArtAndCodeStudio\FacebookEvents\Models;
+<?php namespace ArtAndCodeStudio\FaceBookEvents\Models;
 
 use Model;
 
 /**
  * Model
  */
-class Settings extends Model
+class FacebookEventsSettings extends Model
 {
     use \October\Rain\Database\Traits\Validation;
     
@@ -13,7 +13,7 @@ class Settings extends Model
      * Register Plugin Setting in teh main Settings Sidebar
      */
     public $implement = ['System.Behaviors.SettingsModel'];
-    public $settingsCode = 'artandcodestudio_facebookevent_settings';
+    public $settingsCode = 'artandcodestudio_facebookevents_settings';
     public $settingsFields = 'fields.yaml';
 
     /*

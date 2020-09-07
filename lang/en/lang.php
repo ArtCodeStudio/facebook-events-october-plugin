@@ -1,6 +1,6 @@
 <?php return [
     'plugin' => [
-        'name' => 'FaceBookEvents',
+        'name' => 'FacebookEvents',
         'description' => ''
     ]
 ];

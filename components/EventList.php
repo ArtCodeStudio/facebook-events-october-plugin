@@ -1,8 +1,8 @@
-<?php namespace ArtAndCodeStudio\FaceBookEvents\Components;
-use ArtAndCodeStudio\FaceBookEvents\Models\Settings;
+<?php namespace ArtAndCodeStudio\FacebookEvents\Components;
+use ArtAndCodeStudio\FacebookEvents\Models\Settings;
 use Cms\Classes\ComponentBase;
 use Config;
-use ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK;
+use ArtAndCodeStudio\FacebookEvents\Classes\FacebookSDK;
 
 class EventList extends ComponentBase {
 
@@ -60,7 +60,7 @@ class EventList extends ComponentBase {
 
     // If Facebook Events should be included, we merge them in...
     if ($settings['include_facebook_events']) {
-      $FB_sdk = new FaceBookSDK();
+      $FB_sdk = new FacebookSDK();
       $fbEvents = $FB_sdk->getEvents();
       foreach ($fbEvents as &$e) {
         // same interface as for manually created events

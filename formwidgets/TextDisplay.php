@@ -1,4 +1,4 @@
-<?php namespace ArtAndCodeStudio\FaceBookEvents\FormWidgets;
+<?php namespace ArtAndCodeStudio\FacebookEvents\FormWidgets;
 
 use Backend\Classes\FormWidgetBase;
 use System\Behaviors\SettingsModel;
@@ -26,7 +26,7 @@ class TextDisplay extends FormWidgetBase
      * eq:
      *     token_is_valid:
      *          custom_label: 'Is '
-     *          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+     *          class: \ArtAndCodeStudio\FacebookEvents\Classes\FacebookSDK
      *          function: _getAccessToken_isValid
      *          type: artandcodestudio_textdisplay 
      */
@@ -70,8 +70,8 @@ class TextDisplay extends FormWidgetBase
      */
     public function loadAssets()
     {
-        $this->addCss('css/textdisplay.css', 'artandcodestudio.FaceBookEvents');
-        $this->addJs('js/textdisplay.js', 'artandcodestudio.FaceBookEvents');
+        $this->addCss('css/textdisplay.css', 'artandcodestudio.FacebookEvents');
+        $this->addJs('js/textdisplay.js', 'artandcodestudio.FacebookEvents');
     }
 
     /**

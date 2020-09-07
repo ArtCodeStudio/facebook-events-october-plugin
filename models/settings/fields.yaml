@@ -71,13 +71,13 @@ tabs:
           tab: 'Facebook Setup'
         token_is_valid:
           custom_label: 'Is '
-          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+          class: \ArtAndCodeStudio\FacebookEvents\Classes\FacebookSDK
           function: accessTokenIsValid
           type: artandcodestudio_textdisplay
           tab: 'Facebook Setup'
         expires_at:
           custom_label: 'Expires '
-          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+          class: \ArtAndCodeStudio\FacebookEvents\Classes\FacebookSDK
           function: accessTokenExpiresAt
           type: artandcodestudio_textdisplay
           tab: 'Facebook Setup'
@@ -90,7 +90,7 @@ tabs:
           tab: 'Facebook Setup'
         data_access_expires_at:
           custom_label: 'Expires '
-          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK
+          class: \ArtAndCodeStudio\FacebookEvents\Classes\FacebookSDK
           function: accessTokenDataAccessExpiresAt
           type: artandcodestudio_textdisplay
           tab: 'Facebook Setup'
@@ -102,7 +102,7 @@ tabs:
           comment: ""
           tab: 'Facebook Setup'  
         facebook_backend_routes_login:
-          class: \ArtAndCodeStudio\FaceBookEvents\Classes\FaceBookSDK 
+          class: \ArtAndCodeStudio\FacebookEvents\Classes\FacebookSDK 
           custom_label: ''
           function: getLoginLink
           type: artandcodestudio_textdisplay

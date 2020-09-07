@@ -1,4 +1,4 @@
-<?php namespace ArtAndCodeStudio\FaceBookEvents;
+<?php namespace ArtAndCodeStudio\FacebookEvents;
 
 use System\Classes\PluginBase;
 
@@ -10,7 +10,7 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name' => 'FaceBook Events',
+            'name' => 'Facebook Events',
             'description' => 'Integrates Facebook Page Events',
             'author' => 'Art+Code.studio',
             'icon' => 'icon-facebook'
@@ -23,7 +23,7 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'ArtAndCodeStudio\FaceBookEvents\Components\EventList' => 'eventList'
+            'ArtAndCodeStudio\FacebookEvents\Components\EventList' => 'eventList'
         ];
     }
 
@@ -38,7 +38,7 @@ class Plugin extends PluginBase
                 'label'       => 'Facebook Events',
                 'description' => 'Manage Facebook Events Settings',
                 'icon'        => 'icon-facebook',
-                'class'       => 'ArtAndCodeStudio\FaceBookEvents\Models\Settings',
+                'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\Settings',
                 'order'       => 500,
             ]
         ];
@@ -46,7 +46,7 @@ class Plugin extends PluginBase
     public function registerFormWidgets()
     {
         return [
-            'ArtAndCodeStudio\FaceBookEvents\FormWidgets\TextDisplay' => 'artandcodestudio_textdisplay',
+            'ArtAndCodeStudio\FacebookEvents\FormWidgets\TextDisplay' => 'artandcodestudio_textdisplay',
         ];
     }
 
