@@ -1,6 +1,6 @@
 <?php namespace ArtAndCodeStudio\FacebookEvents\Components;
 use ArtAndCodeStudio\FacebookEvents\Models\Settings;
-use ArtAndCodeStudio\FacebookEvents\Models\ManualEventsSettings;
+use ArtAndCodeStudio\FacebookEvents\Models\ManualEvents;
 use Cms\Classes\ComponentBase;
 use Config;
 use ArtAndCodeStudio\FacebookEvents\Classes\FacebookSDK;
@@ -39,7 +39,16 @@ class EventList extends ComponentBase {
    * and on the page {{component.pluginSettings}}
    */
   public function pluginSettings() {
-    return array_merge(Settings::instance()->value, ManualEventsSettings::instance()->value);
+    $res = array();
+    $mainSettings = Settings::instance()->value;
+    $manualEvents = ManualEvents::instance()->value;
+    if (isset($mainSettings)) {
+      $res = $mainSettings;
+    }
+    if (isset($manualEvents)) {
+      $res = array_merge($res, $manualEvents);
+    }
+    return $res;
   }
 
   /**
