@@ -1,7 +1,7 @@
 <?php namespace ArtAndCodeStudio\FacebookEvents;
 
 use System\Classes\PluginBase;
-
+use Backend;
 class Plugin extends PluginBase
 {
     /**
@@ -46,10 +46,35 @@ class Plugin extends PluginBase
               'label'       => 'Manual Events',
               'description' => 'Manage Manual Events Settings',
               'icon'        => 'icon-facebook',
-              'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\ManualEventsSettings',
+              'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\ManualEvents',
               'order'       => 500,
             ]
         ];
+    }
+
+    public function registerNavigation()
+    {
+      return [
+        'FacebookEvents' => [
+          'label'       => 'Facebook Events',
+          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/settings'),
+          'icon'        => 'icon-facebook',
+          'order'       => 400,
+
+          'sideMenu' => [
+          ]
+        ],
+
+        'ManualEvents' => [
+          'label'       => 'Manual Events',
+          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/manualevents'),
+          'icon'        => 'icon-calendar',
+          'order'       => 400,
+
+          'sideMenu' => [
+          ]
+        ]
+      ];
     }
     public function registerFormWidgets()
     {
