@@ -1,77 +1,265 @@
 tabs:
-    fields:        
-        # GENERAL SETTINGS 
-        include_facebook_events:
-          label: Include Facebook Events
-          type: checkbox
-          default: 1
-          tab: 'General Settings'
-        cache_ttl:
-          label: Event Cache TTL
-          type: number
-          default: 600
-          comment: 'How long Events from Facebook should be cached (to reduce the number of API requests to Facebook - default: 600s = 10m)'
-          tab: 'Facebook Setup'
+  fields:
+    general_settings_section:
+      label: 'General Settings'
+      type: section
+      tab: 'General Settings'
+    # GENERAL SETTINGS 
+    include_facebook_events:
+      label: Include Facebook Events
+      type: checkbox
+      default: 1
+      tab: 'General Settings'
+    include_manual_events:
+      label: Include Manual Events
+      type: checkbox
+      tab: 'General Settings'
+      default: 1
 
-        include_past_events:
-          label: Include Past Events
-          type: checkbox
-          default: 1
-          tab: 'General Settings'
-        include_event_name:
-          label: Name
-          type: checkbox
-          default: 1
-          tab: 'General Settings'
-        include_event_description:
-          label: Description
-          type: checkbox
-          default: 1
-          tab: 'General Settings'
-        include_event_image:
-          label: Event Image
-          type: checkbox
-          default: 1
-          tab: 'General Settings'
-        include_event_url:
-          label: Event URL
-          type: checkbox
-          default: 1
-          tab: 'General Settings'
+    # FACEBOOK SETUP
+    facebook_setup_section:
+      label: 'Facebook Setup'
+      type: section
+      tab: 'General Settings'
 
-        # FACEBOOK SETUP
+    # CREDENTIALS
+    app_id:
+      label: 'APP ID'
+      span: auto
+      type: text
+      tab: 'General Settings'
+    app_secret:
+      label: 'APP SECRET'
+      span: auto
+      type: text
+      tab: 'General Settings'
+    event_page_name:
+      label: 'EVENT PAGE NAME'
+      span: auto
+      type: text
+      tab: 'General Settings'
+    # GENERATED APP TOKEN
+    access_token:
+      label: 'APP TOKEN'
+      span: auto
+      type: text
+      tab: 'General Settings'
+      disabled: true
+    # ACCESS TOKEN INFO
+    access_token_section:
+      label: Access Token Info
+      type: section
+      commentAbove: "Enter App ID, App Secret and Event Page Name"
+      tab: 'General Settings'
+    access_token_info:
+      type: artandcodestudio_accesstokeninfo
+      tab: 'General Settings'
 
-        # CREDENTIALS
-        app_id:
-          label: 'APP ID'
-          span: auto
-          type: text
-          tab: 'Facebook Setup'
-        app_secret:
-          label: 'APP SECRET'
-          span: auto
-          type: text
-          tab: 'Facebook Setup'
-        event_page_name:
-          label: 'EVENT PAGE NAME'
-          span: auto
-          type: text
-          tab: 'Facebook Setup'
+    # FACEBOOK EVENTS
+    cache_ttl:
+      label: Event Cache TTL
+      type: number
+      default: 600
+      span: left
+      commentAbove: 'How long Events from Facebook should be cached (to reduce the number of API requests to Facebook - default: 600s = 10m)'
+      tab: 'Facebook Events'
 
-        # GENERATED APP TOKEN
-        access_token:
-          label: 'APP TOKEN'
-          span: auto
-          type: text
-          tab: 'Facebook Setup'
-          disabled: true
+    include_attending_count:
+      label: Attending Count
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
 
-        # ACCESS TOKEN INFO
-        access_token_section:
-          label: Access Token Info
-          type: section
-          commentAbove: "Enter App ID, App Secret and Event Page Name"
-          tab: 'Facebook Setup'
-        access_token_info:
-          type: artandcodestudio_accesstokeninfo
-          tab: 'Facebook Setup'
+    include_can_guests_invite:
+      label: Can Guests Invite
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_category:
+      label: Category
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_declined_count:
+      label: Declined Count
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_discount_code_enabled:
+      label: Discount Code Enabled
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_event_times:
+      label: Event Times
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_guest_list_enabled:
+      label: Guest List Enabled
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_interested_count:
+      label: Interested Count
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_is_draft:
+      label: Is Draft
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_is_online:
+      label: Is Online
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_is_page_owned:
+      label: Is Page Owned
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_maybe_count:
+      label: Maybe Count
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_noreply_count:
+      label: Noreply Count
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_online_event_format:
+      label: Online Event Format
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_online_event_third_party_url:
+      label: Online Event Third Party Url
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_owner:
+      label: Owner
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_parent_group:
+      label: Parent Group
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_place:
+      label: Place
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_ticket_uri:
+      label: Ticket Uri
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_ticket_uri_start_sales_time:
+      label: Ticket Uri Start Sales Time
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_ticketing_privacy_uri:
+      label: Ticketing Privacy Uri
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_ticketing_terms_uri:
+      label: Ticketing Terms Uri
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_type:
+      label: Type
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    include_updated_time:
+      label: Updated Time
+      type: checkbox
+      default: 0
+      tab: 'Facebook Events'
+
+    manual_events:
+      tab: 'Manual Events'
+      label: Events
+      type: repeater
+      form:
+        fields:
+          description_section:
+            type: section
+            label: 'Description'
+          name:
+            type: text
+            label: Name
+            span: left
+            placeholder: Name
+            required: 1
+            commentHtml: true
+            commentAbove: 'title of the Event <b>(required)</b>'
+          description:
+            type: textarea
+            label: Description
+            span: right
+            commentHtml: true
+            commentAbove: 'Description of the event (HTML is allowed)'
+          image:
+            type: mediafinder
+            mode: image
+            label: Image
+            span: left
+            commentAbove: 'Add an image for the event.'
+          external_url:
+            type: text
+            label: External URL
+            span: full
+            placeholder: http://hmpg.net
+            commentAbove: 'Link to an external Event page (optional)'
+
+          time_section:
+            type: section
+            label: 'Time'
+          start_time:
+            type: datepicker
+            mode: dateTime
+            label: 'Starting time'
+            span: left
+            required: 1
+            commentHtml: true
+            comment: 'Date/Time for the start of the event (<b>required</b>)<br><br><b>Attention:</b> Please choose a date <b>and</b> a time. Otherwise, the current date, or the current time will be filled in.'
+          end_time:
+            type: datepicker
+            mode: datetime
+            label: 'Ending time'
+            span: right
+            required: 0
+            commentHtml: true
+            comment: 'Date/Time for the end of the event (<b>optional</b>)<br><br><b>Attention:</b> Please choose a date <b>and</b> a time. Otherwise, the current date, or the current time will be filled in.'

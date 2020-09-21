@@ -3,12 +3,7 @@
 # ===================================
 
 fields:
-  include_manual_events:
-    label: Include Manual Events
-    type: checkbox
-    tab: 'General Settings'
-    default: 1
-  events:
+  manual_events:
     label: Events
     type: repeater
     form:
