@@ -1,4 +1,4 @@
-<?php namespace ArtAndCodeStudio\FaceBookEvents\Models;
+<?php namespace ArtAndCodeStudio\FacebookEvents\Models;
 
 use Model;
 

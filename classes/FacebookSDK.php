@@ -1,17 +1,17 @@
-<?php namespace ArtAndCodeStudio\FaceBookEvents\Classes;
+<?php namespace ArtAndCodeStudio\FacebookEvents\Classes;
 
-use ArtAndCodeStudio\FaceBookEvents\Classes\SessionHandler;
-use ArtAndCodeStudio\FaceBookEvents\Models\Settings;
-use Facebook\Exception as E;
-use Facebook\Exception\FacebookSDKException;
-use Facebook\Exception\FacebookResponseException;
+use ArtAndCodeStudio\FacebookEvents\Models\Settings;
+use Facebook\Facebook;
+use Facebook\Exceptions\FacebookSDKException;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookAuthenticationException;
 use Cms\Classes\Theme;
 use System\Classes\SettingsManager;
 use Carbon\Carbon;
 use Cache;
+use \DateTime;
 
-class FaceBookSDK {
-  private $is_initalized;
+class FacebookSDK {
   private $app_id;
   private $fb;
   private $access_token;
@@ -20,21 +20,28 @@ class FaceBookSDK {
   private $facebook_callback;
   private $backend_url;
   private $event_page_name;
-  private $include_event_url;
   public const CACHE_PREFIX = 'facebooksdk_';
-
 
   /**
    * Getter for Tokendetails
    */
+  public function getTokenDetail($key) {
+    $tokenDetails = $this->getTokenDetails();
+    if (isset($tokenDetails[$key])) {
+      return $tokenDetails[$key];
+    } else if (isset($tokenDetails['error'])) {
+      return $tokenDetails['error'];
+    }
+  }
+
   public function accessTokenExpiresAt() {
-    return $this->getTokenDetails()['expires_at'];
+    return $this->getTokenDetail('expires_at');
   }
   public function accessTokenIsValid() {
-    return $this->getTokenDetails()['is_valid'];
+    return $this->getTokenDetail('is_valid');
   }
   public function accessTokenDataAccessExpiresAt() {
-    return $this->getTokenDetails()['data_access_expires_at'];
+    return $this->getTokenDetail('data_access_expires_at');
   }
 
   /***
@@ -43,9 +50,8 @@ class FaceBookSDK {
   public function getLoginLink() {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper();
-      $permissions = ['email, pages_read_engagement']; 
-      $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
-      return '<a href="' . getLoginURL() . '">Click here to login</a>';
+      $permissions = ['email, pages_read_engagement'];
+      return '<a href="' . $this->getLoginURL() . '">Click here to login</a>';
     } else {
       return '<a href="/facebook_login">Click here to login</a>';
     }
@@ -66,15 +72,29 @@ class FaceBookSDK {
   /**
    * Converts DateTime object to date string
    */
-  private function convert_DateTime_to_DateString($dateTime) {
+  private function convertDatetimeToDatestring($dateTime) {
     return date_format($dateTime , $this->dateStringFormat);
   }
 
   /**
-   * Converts DateTime timestamp
+   * Converts DateTime to timestamp
    */
-  private function convert_DateTime_to_Timestamp($dateTime) {
+  private function convertDatetimeToTimestamp($dateTime) {
     return date_timestamp_get($dateTime); 
+  }
+
+  /**
+   * Converts timestamp to DateTime
+   */
+  private function convertTimestampToDatetime($timestamp) {
+    return new DateTime('@' . $timestamp); 
+  }
+
+  /**
+   * Converts timestamp to date string
+   */
+  private function convertTimestampToDatestring($timestamp) {
+    return $this->convertDatetimeToDatestring($this->convertTimestampToDatetime($timestamp));
   }
 
   /**
@@ -109,16 +129,24 @@ class FaceBookSDK {
     $helper = $this->fb->getRedirectLoginHelper();
     try {
       $accessToken = $helper->getAccessToken();
-      Settings::set('access_token', (string)$accessToken);
-      echo "<script>window.location = '".$this->backend_url."'</script>";
-    } catch(FacebookResponseException $e) {
+    } catch (FacebookResponseException $e) {
       // When Graph returns an error
       echo 'Graph returned an error: ' . $e->getMessage();
       exit;
-    } catch(FacebookSDKException $e) {
+    } catch (FacebookSDKException $e) {
       // When validation fails or other local issues
       echo 'Facebook SDK returned an error: ' . $e->getMessage();
       exit;
+    }
+    if (isset($accessToken)) {
+      Settings::set('access_token', (string)$accessToken);
+      echo "<script>window.location = '".$this->backend_url."'</script>";
+    } else {
+      $error = $helper->getError();
+      if ($error) {
+        echo "FacebookSDK error: " . $error;
+        exit;
+      }
     }
   }
 
@@ -134,17 +162,21 @@ class FaceBookSDK {
       // returns result from cache, stored under $cacheKey, if exists and not expired
       // otherwise returns result from encapsulated function and stores it under $cacheKey with expiry set to $cacheTime
       return Cache::remember($cacheKey, $cacheTime, function () {
+        $defaultFields = explode(", ", "id, start_time, end_time, description, cover, name, is_canceled, scheduled_publish_time, timezone");
+        $optionalFields = explode(", ", "attending_count, can_guests_invite, category, declined_count, discount_code_enabled, event_times, guest_list_enabled, interested_count, is_draft, is_online, is_page_owned, maybe_count, noreply_count, online_event_format, online_event_third_party_url, owner, parent_group, scheduled_publish_time, start_time, ticket_uri, ticket_uri_start_sales_time, ticketing_privacy_uri, ticketing_terms_uri, type, updated_time");
+        $selectedFields = array_filter($optionalFields, function($field) {
+          return Settings::get("include_" . $field) == 1;
+        });
+        $fieldsString = implode(", ", array_merge($defaultFields, $selectedFields));
+        $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=' . $fieldsString;
         try {
-          $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=id, start_time, end_time, description, cover, name';
           $response = $this->fb->get(
             $graph_ql_query_string,
             $this->access_token
           );
-        } catch(FacebookResponseException $e) {
-          echo 'Graph returned an error: ' . $e->getMessage();
-          exit;
-        } catch(FacebookSDKException $e) {
+        } catch (FacebookSDKException $e) {
           echo 'Facebook SDK returned an error: ' . $e->getMessage();
+          echo 'Query String: '.$graph_ql_query_string;
           exit;
         }
         $graphEdge = $response->getGraphEdge();
@@ -171,48 +203,22 @@ class FaceBookSDK {
           '/debug_token?input_token='.$this->access_token,
           $this->access_token
         );
-      } catch(FacebookExceptionsFacebookResponseException $e) {
-        echo 'Graph returned an error: ' . $e->getMessage();
-        exit;
-      } catch(FacebookExceptionsFacebookSDKException $e) {
-        echo 'Facebook SDK returned an error: ' . $e->getMessage();
-        exit;
+      } catch (FacebookSDKException $e) {
+        return array (
+          "error" => $e->getMessage()
+        );
       }
       $graphNode = $response->getGraphNode();
       $graphArray = $graphNode->asArray();
-      $expires_at = $this->convert_DateTime_to_DateString($graphArray["expires_at"]);
+      $expiresAt = $this->convertDatetimeToDatestring($graphArray["expires_at"]);
+      $dataAccessExpiresAt = $this->convertTimestampToDatestring($graphArray["data_access_expires_at"]);
 
       $filtered_result = array(
         "is_valid" => $graphArray["is_valid"],
-        "expires_at" =>   $expires_at ? $expires_at : "never",
-        "data_access_expires_at" => $graphArray["data_access_expires_at"],
+        "expires_at" => $expiresAt ? $expiresAt : "never",
+        "data_access_expires_at" => $dataAccessExpiresAt ? $dataAccessExpiresAt : "never",
       );
       return $filtered_result;
-    }
-  }
-
-  /**
-   * Validates is access token is still valid, if not redirect  
-   * https://developers.facebook.com/docs/graph-api/reference/v7.0/debug_token
-   */
-  public function validateToken() {
-    if (isset($this->access_token)) {
-      try {
-        // Returns a `FacebookFacebookResponse` object
-        $response = $this->fb->get(
-          '/debug_token?input_token='.$this->access_token,
-          $this->access_token
-        );
-      } catch(FacebookExceptionsFacebookResponseException $e) {
-        echo 'Graph returned an error: ' . $e->getMessage();
-        exit;
-
-      } catch(FacebookExceptionsFacebookSDKException $e) {
-        echo 'Facebook SDK returned an error: ' . $e->getMessage();
-        exit;
-      }
-    } else {
-      return "no accesstoken";
     }
   }
 
@@ -220,10 +226,10 @@ class FaceBookSDK {
    * Anything starts here
    */
   function __construct() {
-    $this->backend_url =  "https://".$_SERVER['HTTP_HOST']."/backend/system/settings/update/artandcodestudio/facebookevents/settings"; 
-    $this->facebook_callback = "https://".$_SERVER['HTTP_HOST'] ."/facebook_callback";
+    $protocol = isset($_SERVER['HTTPS']) ? "https" : "http";
+    $this->backend_url =  $protocol . "://".$_SERVER['HTTP_HOST']."/backend/system/settings/update/artandcodestudio/facebookevents/settings"; 
+    $this->facebook_callback = $protocol . "://".$_SERVER['HTTP_HOST'] ."/facebook_callback";
     $this->event_page_name = Settings::get('event_page_name');
-    $this->include_event_url = Settings::get('include_event_url');
     $this->cache_ttl = Settings::get('cache_ttl');
 
     /***
@@ -243,13 +249,11 @@ class FaceBookSDK {
       $this->app_secret = Settings::get('app_secret');
       $this->dateStringFormat = "d-m-Y H:i:s";
 
-      $this->fb = new \Facebook\Facebook([
+      $this->fb = new Facebook([
         'app_id' =>  $this->app_id, 
         'app_secret' => $this->app_secret,
         'default_graph_version' => 'v2.10'
       ]);
-    } else {
-      echo "please login to facebook";
     }
   }
 }

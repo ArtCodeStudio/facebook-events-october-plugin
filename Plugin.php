@@ -1,7 +1,7 @@
-<?php namespace ArtAndCodeStudio\FaceBookEvents;
+<?php namespace ArtAndCodeStudio\FacebookEvents;
 
 use System\Classes\PluginBase;
-
+use Backend;
 class Plugin extends PluginBase
 {
     /**
@@ -10,7 +10,7 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name' => 'FaceBook Events',
+            'name' => 'Facebook Events',
             'description' => 'Integrates Facebook Page Events',
             'author' => 'Art+Code.studio',
             'icon' => 'icon-facebook'
@@ -23,7 +23,7 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'ArtAndCodeStudio\FaceBookEvents\Components\EventList' => 'eventList'
+            'ArtAndCodeStudio\FacebookEvents\Components\EventList' => 'eventList'
         ];
     }
 
@@ -38,15 +38,48 @@ class Plugin extends PluginBase
                 'label'       => 'Facebook Events',
                 'description' => 'Manage Facebook Events Settings',
                 'icon'        => 'icon-facebook',
-                'class'       => 'ArtAndCodeStudio\FaceBookEvents\Models\Settings',
+                'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\Settings',
                 'order'       => 500,
+            ],
+
+            'manualEvents' => [
+              'label'       => 'Manual Events',
+              'description' => 'Manage Manual Events Settings',
+              'icon'        => 'icon-facebook',
+              'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\ManualEvents',
+              'order'       => 500,
             ]
         ];
+    }
+
+    public function registerNavigation()
+    {
+      return [
+        'FacebookEvents' => [
+          'label'       => 'Facebook Events',
+          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/settings#primarytab-facebook-events'),
+          'icon'        => 'icon-facebook',
+          'order'       => 400,
+
+          'sideMenu' => [
+          ]
+        ],
+
+        'ManualEvents' => [
+          'label'       => 'Manual Events',
+          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/settings#primarytab-manual-events'),
+          'icon'        => 'icon-calendar',
+          'order'       => 400,
+
+          'sideMenu' => [
+          ]
+        ]
+      ];
     }
     public function registerFormWidgets()
     {
         return [
-            'ArtAndCodeStudio\FaceBookEvents\FormWidgets\TextDisplay' => 'artandcodestudio_textdisplay',
+            'ArtAndCodeStudio\FacebookEvents\FormWidgets\AccessTokenInfo' => 'artandcodestudio_accesstokeninfo',
         ];
     }
 
