@@ -22,9 +22,6 @@ class FacebookSDK {
   private $event_page_name;
   public const CACHE_PREFIX = 'facebooksdk_';
 
-  public const QUERY_FIELDS_ALL = 
-
-
   /**
    * Getter for Tokendetails
    */
