@@ -1,3 +1,5 @@
+<pre><code>{{ __SELF__.events | json_encode(constant('JSON_PRETTY_PRINT')) }}</code></pre>
+
 {% for event in __SELF__.events %}
   <pre><code>{{ event | json_encode(constant('JSON_PRETTY_PRINT')) }}</code></pre>
 
@@ -16,13 +18,13 @@
     <p>End: {{event.end_time.format('d-m-Y')}}</p>
 
     {% if  __SELF__.pluginSettings.include_event_url %}
-        <p>
-            <a href="{{event.external_url}}" target="_blank">open on facebook</a>
-        </p>
+      <p>
+        <a href="{{event.external_url}}" target="_blank">open on facebook</a>
+      </p>
     {% endif %}
 
     {% if  __SELF__.pluginSettings.include_event_image %}
-        <img style="width:90px" src="{{event.image}}">
+      <img style="width:90px" src="{{event.image}}">
     {% endif %}
 
   {% endif %}

@@ -39,29 +39,24 @@ class EventList extends ComponentBase {
    * and on the page {{component.pluginSettings}}
    */
   public function pluginSettings() {
-    $res = array();
-    $mainSettings = Settings::instance()->value;
-    $manualEvents = ManualEvents::instance()->value;
-    if (isset($mainSettings)) {
-      $res = $mainSettings;
+    $settings = Settings::instance()->value;
+    if (isset($settings)) {
+      return $settings;
     }
-    if (isset($manualEvents)) {
-      $res = array_merge($res, $manualEvents);
-    }
-    return $res;
+    return array();
   }
 
   /**
    * becomes available in the component template as  {{ __SELF__.events }} 
    * and on the page {{component.events}}
-   */ 
+   */
   public function events() {
     // get manually created events from Settings
     $settings = $this->pluginSettings();
     $events = array();
 
-    if ($settings['include_manual_events'] && isset($settings['events'])) {
-      $events = array_merge($events, $settings['events']);
+    if ($settings['include_manual_events'] && isset($settings['manual_events'])) {
+      $events = array_merge($events, $settings['manual_events']);
     }
 
     foreach ($events as &$e) {
@@ -94,7 +89,6 @@ class EventList extends ComponentBase {
     usort($events, function ($a, $b) {
       return date_timestamp_get($b['start_time']) - date_timestamp_get($a['start_time']);
     });
-
     return $events;
   }
 }

@@ -167,12 +167,9 @@ class FacebookSDK {
         $selectedFields = array_filter($optionalFields, function($field) {
           return Settings::get("include_" . $field) == 1;
         });
-        $fields = array_merge($defaultFields, $selectedFields);
-        $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=' . $fields;
+        $fieldsString = implode(", ", array_merge($defaultFields, $selectedFields));
+        $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=' . $fieldsString;
         try {
-          $fields = $defaultFields . ", " . implode(", ", array_filter(explode(", ", $optionalFields), function($field) {
-            return Settings::get("include_" . $field) == 1;
-          }));
           $response = $this->fb->get(
             $graph_ql_query_string,
             $this->access_token
