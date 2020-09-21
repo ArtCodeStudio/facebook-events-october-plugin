@@ -22,6 +22,8 @@ class FacebookSDK {
   private $event_page_name;
   public const CACHE_PREFIX = 'facebooksdk_';
 
+  public const QUERY_FIELDS_ALL = 
+
 
   /**
    * Getter for Tokendetails
@@ -163,10 +165,17 @@ class FacebookSDK {
       // returns result from cache, stored under $cacheKey, if exists and not expired
       // otherwise returns result from encapsulated function and stores it under $cacheKey with expiry set to $cacheTime
       return Cache::remember($cacheKey, $cacheTime, function () {
+        $defaultFields = explode(", ", "id, start_time, end_time, description, cover, name, is_canceled, scheduled_publish_time, timezone");
+        $optionalFields = explode(", ", "attending_count, can_guests_invite, category, declined_count, discount_code_enabled, event_times, guest_list_enabled, interested_count, is_draft, is_online, is_page_owned, maybe_count, noreply_count, online_event_format, online_event_third_party_url, owner, parent_group, scheduled_publish_time, start_time, ticket_uri, ticket_uri_start_sales_time, ticketing_privacy_uri, ticketing_terms_uri, type, updated_time");
+        $selectedFields = array_filter($optionalFields, function($field) {
+          return Settings::get("include_" . $field) == 1;
+        });
+        $fields = array_merge($defaultFields, $selectedFields);
+        $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=' . $fields;
         try {
-          $defaultFields = "id, start_time, end_time, description, cover, name";
-          $fields = "id, attending_count, can_guests_invite, category, cover, declined_count, description, discount_code_enabled, end_time, event_times, guest_list_enabled, interested_count, is_canceled, is_draft, is_online, is_page_owned, maybe_count, name, noreply_count, online_event_format, online_event_third_party_url, owner, parent_group, place, scheduled_publish_time, start_time, ticket_uri, ticket_uri_start_sales_time, ticketing_privacy_uri, ticketing_terms_uri, timezone, type, updated_time";
-          $graph_ql_query_string = '/'.  $this->event_page_name. '/events?fields=' . $fields; //id, start_time, end_time, description, cover, name';
+          $fields = $defaultFields . ", " . implode(", ", array_filter(explode(", ", $optionalFields), function($field) {
+            return Settings::get("include_" . $field) == 1;
+          }));
           $response = $this->fb->get(
             $graph_ql_query_string,
             $this->access_token

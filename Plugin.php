@@ -57,7 +57,7 @@ class Plugin extends PluginBase
       return [
         'FacebookEvents' => [
           'label'       => 'Facebook Events',
-          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/settings'),
+          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/settings#primarytab-facebook-events'),
           'icon'        => 'icon-facebook',
           'order'       => 400,
 
@@ -67,7 +67,7 @@ class Plugin extends PluginBase
 
         'ManualEvents' => [
           'label'       => 'Manual Events',
-          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/manualevents'),
+          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/settings#primarytab-manual-events'),
           'icon'        => 'icon-calendar',
           'order'       => 400,
 
