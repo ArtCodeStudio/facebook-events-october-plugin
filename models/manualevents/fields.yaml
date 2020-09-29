@@ -6,6 +6,10 @@ fields:
   manual_events_section:
     label: 'Manual Events'
     type: section
+  include_manual_events:
+    label: Include Manual Events
+    type: checkbox
+    default: 1
   manual_events:
       label: Events
       type: repeater

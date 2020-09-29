@@ -39,11 +39,16 @@ class EventList extends ComponentBase {
    * and on the page {{component.pluginSettings}}
    */
   public function pluginSettings() {
-    $settings = Settings::instance()->value;
-    if (isset($settings)) {
-      return $settings;
+    $settings = array();
+    $facebookSettings = Settings::instance()->value;
+    $manualEventsSettings = ManualEvents::instance()->value;
+    if (isset($facebookSettings) && is_array($facebookSettings)) {
+      $settings = array_merge($settings, $facebookSettings);
     }
-    return array();
+    if (isset($manualEventsSettings) && is_array($manualEventsSettings)) {
+      $settings = array_merge($settings, $manualEventsSettings);
+    }
+    return $settings;
   }
 
   /**

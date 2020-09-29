@@ -1,59 +1,54 @@
 tabs:
   fields:
-    general_settings_section:
-      label: 'Credentials'
+    facebook_settings_section:
+      label: 'Facebook Settings'
       type: section
-      tab: 'Credentials'
-    # Credentials 
+      tab: 'Facebook Settings'
+    # Facebook Settings 
     include_facebook_events:
       label: Include Facebook Events
       type: checkbox
       default: 1
-      tab: 'Credentials'
-    include_manual_events:
-      label: Include Manual Events
-      type: checkbox
-      tab: 'Credentials'
-      default: 1
+      tab: 'Facebook Settings'
 
     # FACEBOOK SETUP
     facebook_setup_section:
       label: 'Facebook Setup'
       type: section
-      tab: 'Credentials'
+      tab: 'Facebook Settings'
 
-    # CREDENTIALS
+    # Facebook Settings
     app_id:
       label: 'APP ID'
       span: auto
       type: text
-      tab: 'Credentials'
+      tab: 'Facebook Settings'
     app_secret:
       label: 'APP SECRET'
       span: auto
       type: text
-      tab: 'Credentials'
+      tab: 'Facebook Settings'
     event_page_name:
       label: 'EVENT PAGE NAME'
       span: auto
       type: text
-      tab: 'Credentials'
+      tab: 'Facebook Settings'
     # GENERATED APP TOKEN
     access_token:
       label: 'APP TOKEN'
       span: auto
       type: text
-      tab: 'Credentials'
+      tab: 'Facebook Settings'
       disabled: true
     # ACCESS TOKEN INFO
     access_token_section:
       label: Access Token Info
       type: section
       commentAbove: "Enter App ID, App Secret and Event Page Name"
-      tab: 'Credentials'
+      tab: 'Facebook Settings'
     access_token_info:
       type: artandcodestudio_accesstokeninfo
-      tab: 'Credentials'
+      tab: 'Facebook Settings'
 
     # FACEBOOK EVENTS
     cache_ttl:
