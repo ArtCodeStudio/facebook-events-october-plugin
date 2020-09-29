@@ -55,19 +55,9 @@ class Plugin extends PluginBase
     public function registerNavigation()
     {
       return [
-        'FacebookEvents' => [
-          'label'       => 'Facebook Events',
-          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/settings#primarytab-facebook-events'),
-          'icon'        => 'icon-facebook',
-          'order'       => 400,
-
-          'sideMenu' => [
-          ]
-        ],
-
         'ManualEvents' => [
           'label'       => 'Manual Events',
-          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/settings#primarytab-manual-events'),
+          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/manualevents'),
           'icon'        => 'icon-calendar',
           'order'       => 400,
 

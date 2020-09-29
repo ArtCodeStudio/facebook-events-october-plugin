@@ -3,10 +3,13 @@
 # ===================================
 
 fields:
+  manual_events_section:
+    label: 'Manual Events'
+    type: section
   manual_events:
-    label: Events
-    type: repeater
-    form:
+      label: Events
+      type: repeater
+      form:
         fields:
           description_section:
             type: section
