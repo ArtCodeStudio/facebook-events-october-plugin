@@ -41,14 +41,6 @@ class Plugin extends PluginBase
                 'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\Settings',
                 'order'       => 500,
             ],
-
-            'manualEvents' => [
-              'label'       => 'Manual Events',
-              'description' => 'Manage Manual Events Settings',
-              'icon'        => 'icon-facebook',
-              'class'       => 'ArtAndCodeStudio\FacebookEvents\Models\ManualEvents',
-              'order'       => 500,
-            ]
         ];
     }
 
@@ -57,10 +49,9 @@ class Plugin extends PluginBase
       return [
         'ManualEvents' => [
           'label'       => 'Manual Events',
-          'url'         => Backend::url('system/settings/update/artandcodestudio/facebookevents/manualevents'),
-          'icon'        => 'icon-calendar',
+          'url'         => Backend::url('artandcodestudio/facebookevents/manualevents'),
+          'icon'        => 'icon-flash',
           'order'       => 400,
-
           'sideMenu' => [
           ]
         ]
