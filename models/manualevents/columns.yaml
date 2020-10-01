@@ -1,0 +1,7 @@
+columns:
+    id:
+        label: ID
+        type: number
+    event_name:
+        label: 'Event Name'
+        type: switch

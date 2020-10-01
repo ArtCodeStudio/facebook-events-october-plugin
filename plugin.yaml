@@ -1,6 +1,16 @@
 plugin:
-    name: 'ArtAndCodeStudio.facebookevents::lang.plugin.name'
-    description: 'artandcodestudio.facebookevents::lang.plugin.description'
-    author: 'Art+Code Studio'
-    icon: oc-icon-facebook
-    homepage: 'https://artandcode.studio/'
+  name: 'ArtAndCodeStudio.facebookevents::lang.plugin.name'
+  description: 'artandcodestudio.facebookevents::lang.plugin.description'
+  author: 'Art+Code Studio'
+  icon: oc-icon-facebook
+homepage: 'https://artandcode.studio/'
+navigation:
+  Events:
+    label: Events
+    url: artandcodestudio/facebookevents/manualevents
+    icon: icon-flash
+    sideMenu:
+      ManualEvents:
+        label: 'Manual Events'
+        url: artandcodestudio/facebookevents/manualevents
+        icon: icon-flash

@@ -1,11 +1,5 @@
 1.0.1:
     - 'Initialize plugin.'
 1.0.2:
-    - 'Created table artandcodestudio_facebookevents_settings'
-    - builder_table_create_artandcodestudio_facebookevents_settings.php
-1.0.3:
-    - 'Updated table artandcodestudio_facebookevents_settings'
-    - builder_table_update_artandcodestudio_facebookevents_settings.php
-1.0.4:
-    - 'Drop table artandcodestudio_facebookevents_settings'
-    - builder_table_delete_artandcodestudio_facebookevents_settings.php
+    - 'Created table artandcodestudio_facebookevents_manualevents'
+    - builder_table_create_artandcodestudio_facebookevents_manualevents.php

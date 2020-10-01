@@ -1,0 +1,10 @@
+name: ManualEvents
+form: $/artandcodestudio/facebookevents/models/manualevents/fields.yaml
+modelClass: artandcodestudio\Facebookevents\Models\ManualEvents
+defaultRedirect: artandcodestudio/facebookevents/manualevents
+create:
+    redirect: 'artandcodestudio/facebookevents/manualevents/update/:id'
+    redirectClose: artandcodestudio/facebookevents/manualevents
+update:
+    redirect: artandcodestudio/facebookevents/manualevents
+    redirectClose: artandcodestudio/facebookevents/manualevents
