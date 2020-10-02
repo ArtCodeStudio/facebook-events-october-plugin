@@ -11,7 +11,12 @@ class BuilderTableCreateArtandcodestudioFacebookeventsManualevents extends Migra
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->smallInteger('event_name');
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->string('image')->nullable();
+            $table->string('external_url')->nullable();
+            $table->dateTime('start_time');
+            $table->dateTime('end_time')->nullable();
         });
     }
     

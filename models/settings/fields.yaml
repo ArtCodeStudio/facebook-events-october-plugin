@@ -10,6 +10,11 @@ tabs:
       type: checkbox
       default: 1
       tab: 'Facebook Settings'
+    include_manual_events:
+      label: Include Manual Events
+      type: checkbox
+      default: 1
+      tab: 'Facebook Settings'
 
     # FACEBOOK SETUP
     facebook_setup_section:

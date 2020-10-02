@@ -1,7 +1,21 @@
 columns:
-    id:
-        label: ID
-        type: number
-    event_name:
-        label: 'Event Name'
-        type: switch
+  name:
+    label: Event Name
+    type: text
+    required: 1
+  description:
+    type: text
+    label: Description
+  image:
+    type: text
+    label: Image
+  external_url:
+    type: text
+    label: External URL
+  start_time:
+    type: dateTime
+    label: Starting time
+  end_time:
+    type: dateTime
+    mode: datetime
+    label: Ending time

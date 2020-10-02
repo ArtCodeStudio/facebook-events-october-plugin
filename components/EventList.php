@@ -15,10 +15,15 @@ class EventList extends ComponentBase {
   }
 
   /**
-   *  
+   *  TODO: some events don't have an "end_time". They are "upcoming" before the start_time. Should other events treated the same?
+   *  Maybe not just distinguish the "past" vs "upcoming", but "past" vs "happening_now" vs "upcoming".
    */
-  public function isUpcoming($endTime) {
-    $endTimestamp = date_timestamp_get($endTime);
+  public function isUpcoming($startTime, $endTime) {
+    if (isset($endTime)) {
+      $endTimestamp = date_timestamp_get($endTime);
+    } else {
+      $endTimestamp = date_timestamp_get($startTime);
+    }
     $interval =  $endTimestamp - time();
     if ($interval > 0) {
       return true;  // yes it is upcoming
@@ -39,16 +44,7 @@ class EventList extends ComponentBase {
    * and on the page {{component.pluginSettings}}
    */
   public function pluginSettings() {
-    $settings = array();
-    $facebookSettings = Settings::instance()->value;
-    $manualEventsSettings = ManualEvents::instance()->value;
-    if (isset($facebookSettings) && is_array($facebookSettings)) {
-      $settings = array_merge($settings, $facebookSettings);
-    }
-    if (isset($manualEventsSettings) && is_array($manualEventsSettings)) {
-      $settings = array_merge($settings, $manualEventsSettings);
-    }
-    return $settings;
+      return Settings::instance()->value;
   }
 
   /**
@@ -56,12 +52,10 @@ class EventList extends ComponentBase {
    * and on the page {{component.events}}
    */
   public function events() {
-    // get manually created events from Settings
     $settings = $this->pluginSettings();
     $events = array();
-
-    if ($settings['include_manual_events'] && isset($settings['manual_events'])) {
-      $events = array_merge($events, $settings['manual_events']);
+    if ($settings['include_manual_events']) {
+      $events = ManualEvents::all()->toArray();
     }
 
     foreach ($events as &$e) {
