@@ -5,12 +5,7 @@ plugin:
   icon: oc-icon-facebook
 homepage: 'https://artandcode.studio/'
 navigation:
-  Events:
-    label: Events
+  ManualEvents:
+    label: ManualEvents
     url: artandcodestudio/facebookevents/manualevents
     icon: icon-flash
-    sideMenu:
-      ManualEvents:
-        label: 'Manual Events'
-        url: artandcodestudio/facebookevents/manualevents
-        icon: icon-flash

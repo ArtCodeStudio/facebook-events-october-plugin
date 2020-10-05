@@ -163,7 +163,7 @@ class FacebookSDK {
       // otherwise returns result from encapsulated function and stores it under $cacheKey with expiry set to $cacheTime
       return Cache::remember($cacheKey, $cacheTime, function () {
         $defaultFields = explode(", ", "id, start_time, end_time, description, cover, name, is_canceled, scheduled_publish_time, timezone");
-        $optionalFields = explode(", ", "attending_count, can_guests_invite, category, declined_count, discount_code_enabled, event_times, guest_list_enabled, interested_count, is_draft, is_online, is_page_owned, maybe_count, noreply_count, online_event_format, online_event_third_party_url, owner, parent_group, scheduled_publish_time, start_time, ticket_uri, ticket_uri_start_sales_time, ticketing_privacy_uri, ticketing_terms_uri, type, updated_time");
+        $optionalFields = explode(", ", "attending_count, can_guests_invite, category, declined_count, discount_code_enabled, event_times, guest_list_enabled, interested_count, is_draft, is_online, is_page_owned, maybe_count, noreply_count, online_event_format, online_event_third_party_url, owner, parent_group, place, scheduled_publish_time, start_time, ticket_uri, ticket_uri_start_sales_time, ticketing_privacy_uri, ticketing_terms_uri, type, updated_time");
         $selectedFields = array_filter($optionalFields, function($field) {
           return Settings::get("include_" . $field) == 1;
         });

@@ -16,6 +16,6 @@ class ManualEvents extends Controller
     public function __construct()
     {
     parent::__construct();
-       BackendMenu::setContext('artandcodestudio.Facebookevents', 'Events', 'ManualEvents');
+       BackendMenu::setContext('ArtAndCodeStudio.FacebookEvents', 'ManualEvents');
     }
 }
