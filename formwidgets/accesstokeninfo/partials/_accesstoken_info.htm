@@ -1,37 +1,26 @@
-<div>
 
-  <?php if (!isset($token) || isset($token['error'])) {
-      if (isset($token['error'])) {
-        echo "<div>Facebook SDK error:</b> " . $token['error'] ."</div>";
-      }
-      echo '<div><a href="' . $loginURL . '">Login to Facebook</a> to retrieve an access token.</div>';
-    } else {
-      if ($token['is_valid']) {
-        echo "<div>Token is valid</div>";
-        echo "<div>Token expires at: " . $token['expires_at'] . "</div>";
-        // date("d-m-Y H:i", 
-        echo "<div>Data access expires at: " . $token['data_access_expires_at'] . "</div>";
-        //echo '<div>Login: <a href="' . $loginURL . '">Login to Facebook</a> to edit app permissions and refresh the access token.</div>';
-        echo '<div style="opacity:0" id="facebook_login_link">Login: <a id="facebook_login_url"href="">Login to Facebook</a> to edit app permissions and refresh the access token.</div>';
+<?php if (!isset($token) || isset($token['error'])): ?>
+  <?php if(isset($token['error'])):?>
+    <div>Facebook SDK error:</b> <?php echo $token['error']; ?> </div>
+  <?php endif; ?>
+<?php else: ?>
+  <div>Token is valid</div>
+  <div>Token expires at: <?php echo $token['expires_at'];?> </div>
+  <!--div>Login: <a href="<?php echo $loginURL; ?>">Login to Facebook</a> to edit app permissions and refresh the access token.</div-->
+  <div>
+  <hr>
+    <p>Relogin to edit app permissions and refresh the access token</p>
+    <a href="<?php echo $loginURL; ?>"><img src="https://i.imgur.com/X7eqJ1C.png"></a> 
+  </div>
+<?php endif ?>
+<!--div style="opacity:0" id="facebook_login_link">Login: <a href="" id="facebook_login_url">Login to Facebook</a> to edit app permissions and refresh the access token.</div-->
+<div style="opacity:0" id="facebook_login_link"><a href="" id="facebook_login_url"><img src="https://i.imgur.com/X7eqJ1C.png"></a> to edit app permissions and refresh the access token.</div>
 
-      }
-    }
-  ?>
-</div>
-<button id="facebook_login_button">Facebook Login Button</button>
 <script>
   window.onload =()=>
   {
     var facebook_login_link = document.getElementById("facebook_login_link")
     var facebook_login_url = document.getElementById("facebook_login_url")
-
-    var facebook_login_button = document.getElementById("facebook_login_button").addEventListener('click',(e)=>
-    {
-      e.preventDefault()
-      console.log('check')
-      checkInput()
-      //getLoginLink()
-    })
     var app_id_input = document.getElementsByName("Settings[app_id]")[0]
     var app_secret_input = document.getElementsByName("Settings[app_secret]")[0]
     var event_page_name_input = document.getElementsByName("Settings[event_page_name]")[0]
@@ -45,7 +34,6 @@
         {
           if (httpRequest.status === 200) 
           {
-            console.log(httpRequest.responseText)
             facebook_login_url.href = httpRequest.responseText
             facebook_login_link.style.opacity = 1
           } else {
@@ -61,7 +49,6 @@
     {
       if( app_id_input.value != '' && app_secret_input.value != '' && event_page_name_input.value != '')
       {
-        // all inpus have data, so we are ready to save !
         $('form').request('onSave', {
           data: {redirect:0},
           success: function() {
@@ -74,11 +61,7 @@
       {  
         console.log('some inputs missing')
       }
-        /*console.log('app_id_input', app_id_input.value)
-        console.log('app_secret_input', app_secret_input.value)
-        console.log('event_page_name_input', event_page_name_input.value)*/
-        //
-        // check if all inputs are filled, then show facebook login button
+
     }
     app_id_input.addEventListener('input', checkInput)
     app_secret_input.addEventListener('input', checkInput)
