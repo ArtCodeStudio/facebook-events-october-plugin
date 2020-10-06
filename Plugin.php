@@ -68,29 +68,4 @@ class Plugin extends PluginBase
     {
         
     }
-    // public function registerMarkupTags()
-    // {
-    //     return [
-    //         'filters' => [
-    //             // A global function, i.e str_plural()
-    //             'plural' => 'str_plural',
-
-    //             // A local method, i.e $this->makeTextAllCaps()
-    //             'uppercase' => [$this, 'makeTextAllCaps']
-    //         ],
-    //         'functions' => [
-    //             // A static method call, i.e Form::open()
-    //             'form_open' => ['October\Rain\Html\Form', 'open'],
-
-    //             // Using an inline closure
-    //             'helloWorld' => function() { return 'Hello World!'; }
-    //         ]
-    //     ];
-    // }
-
-    // public function makeTextAllCaps($text)
-    // {
-    //     return strtoupper($text);
-    // }
-
 }

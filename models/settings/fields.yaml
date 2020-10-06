@@ -64,6 +64,11 @@ tabs:
       commentAbove: 'How long Events from Facebook should be cached (to reduce the number of API requests to Facebook - default: 600s = 10m)'
       tab: 'Facebook Events'
 
+    include_settings_section:
+      label: Fields to include
+      type: section
+      tab: 'Facebook Events'
+
     include_attending_count:
       label: Attending Count
       type: checkbox
