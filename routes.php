@@ -29,3 +29,9 @@ Route::get('/facebook_events', function () {
     $FB_sdk = new FacebookSDK();
     $FB_sdk->getEvents();
 });
+
+Route::get('/get_login_url', function () {
+    $FB_sdk = new FacebookSDK();
+    return $FB_sdk->getLoginURL();
+});
+
