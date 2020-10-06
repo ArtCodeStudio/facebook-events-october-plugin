@@ -3,29 +3,23 @@
 {% for event in __SELF__.events %}
   <pre><code>{{ event | json_encode(constant('JSON_PRETTY_PRINT')) }}</code></pre>
 
-  {% if __SELF__.isUpcoming(event.end_time) or __SELF__.pluginSettings.include_past_events %}
+  {% if __SELF__.isUpcoming(event.start_time, event.end_time) %}
   
-    {% if __SELF__.pluginSettings.include_event_name %}
-      <h1>{{event.name}}</h1>
-    {% endif %}
+    <h1>{{event.name}}</h1>
 
-    {% if __SELF__.pluginSettings.include_event_description %}
-      <p>{{event.description}}</p>
-    {% endif %}
+    <p>{{event.description}}</p>
 
     <p>Start: {{event.start_time.format('d-m-Y')}}</p>
 
+    {% if event.end_time %}
     <p>End: {{event.end_time.format('d-m-Y')}}</p>
-
-    {% if  __SELF__.pluginSettings.include_event_url %}
-      <p>
-        <a href="{{event.external_url}}" target="_blank">open on facebook</a>
-      </p>
     {% endif %}
 
-    {% if  __SELF__.pluginSettings.include_event_image %}
-      <img style="width:90px" src="{{event.image}}">
-    {% endif %}
+    <p>
+      <a href="{{event.external_url}}" target="_blank">open on facebook</a>
+    </p>
+
+    <img style="width:90px" src="{{event.image}}">
 
   {% endif %}
 
