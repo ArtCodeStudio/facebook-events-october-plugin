@@ -11,3 +11,7 @@
  {
     padding-bottom: 4px;
  }
+
+ #facebook_login_link {
+   opacity: 0;
+ }

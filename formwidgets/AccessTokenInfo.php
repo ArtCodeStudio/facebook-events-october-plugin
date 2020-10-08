@@ -27,6 +27,7 @@ class AccessTokenInfo extends FormWidgetBase
         $sdk = new FacebookSDK();
         $this->vars['loginURL'] = $sdk->getLoginURL();
         $this->vars['token'] = $sdk->getTokenDetails();
+        $this->vars['loginButtonImage'] = url('/plugins/artandcodestudio/facebookevents/formwidgets/accesstokeninfo/assets/images/facebooklogin.png');
     }
 
     /**
