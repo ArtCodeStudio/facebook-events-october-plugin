@@ -14,14 +14,15 @@ After installing the plugin, a new sidebar item here:
 
 **Settings -> Misc -> Facebook Events** 
 
-##### Facebook Settings Tab
+#### Facebook Settings Tab
 This tab offers the choice to display Facebook page events, manual entered events or even both.  
-Manual events can be maintained under the Manual Events top-menu section.(see Manual Events Topic below)   
+Manual events can be maintained under the Manual Events top-menu section. 
+(see Manual Events Topic below)
    
 If you want to include events from a Facebook page, you have to register a Facebook 'app' for it and enter certain credentials, to authorize your app with the Facebook API server.  
 The steps to complete for this are as follows:
 
-###### 1.) Create a new App
+##### 1.) Create a new App
 First, we need to create a new Facebook app.   
 Create an account at https://developers.facebook.com, if you don't have one.  
 Then follow the [Facebook documentation](https://developers.facebook.com/apps/) on how to add a new app
@@ -73,6 +74,13 @@ Here you can verify that the APP TOKEN field is now populated as well as the Acc
 ##### Facebook Events Tab
 The Event Cache TTL setting defines how long Facebook page events should be cached to reduce the number of API requests to Facebook - (default: 600s = 10m)  
 The 'Fields to include section' lets you select which data should be rendered in the eventlist component.
+
+## Manual Events
+These Events are created under the Manaual Events Top Navigation Section. Here you can create new Events or edit existing:
+![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/manual_events_section.png)
+![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/manual_events_create_update.png)
+
+
 
 ## Custom Event Component
 To override the Plugin default component view,  
