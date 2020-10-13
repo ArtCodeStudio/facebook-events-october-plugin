@@ -1,9 +1,23 @@
 
+<?php if(!isset($token)): ?>
+  <div class="form-group  section-field span-full   " data-field-name="access_token_section" id="Form-field-Settings-access_token_section-group"><!-- Section -->
+    <div class="field-section">
+      <h4>Access Token Info</h4>
+      <p class="help-block">Enter App ID, App Secret,  Event Page Name and click save to log into Facebook </p>
+    </div>
+  </div>
+<?php endif; ?>
+
 <?php if (!isset($token) || isset($token['error'])): ?>
   <?php if(isset($token['error'])):?>
     <div>Facebook SDK error:</b> <?php echo $token['error']; ?> </div>
   <?php endif; ?>
 <?php else: ?>
+  <div class="form-group  section-field span-full   " data-field-name="access_token_section" id="Form-field-Settings-access_token_section-group"><!-- Section -->
+    <div class="field-section">
+      <h4>Access Token Info</h4>
+    </div>
+  </div>
   <div>Token is valid</div>
   <div>Token expires at: <?php echo $token['expires_at'];?> </div>
   <div>
@@ -19,3 +33,4 @@
   </a>
   to edit app permissions and refresh the access token.
 </div>
+
