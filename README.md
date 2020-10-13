@@ -1,63 +1,60 @@
 # October CMS Facebook Events Plugin
 
-This plugin allows you to announce upcoming events on your website, which can be either manually created or automatically pulled from a Facebook page. You can also mix both modes.
-The plugin contains a single component, named 'eventlist', which is used to display the event timeline. The default template for it is very bare and raw. It is recommended to use your markup for it to make the design fit your needs.
+## About
 
-## Settings
-Under Settings/Misc. in the Backend you will find a new menu entry called 'Facebook Events'.
-Click on it to configure the behavior of the Facebook Events plugin. There are three tabs of settings you can configure:
+This plugin allows you to announce upcoming events on your website,  which can be either manually created or automatically pulled from a Facebook page event. You may also mix both modes. 
 
-### General Settings
+The plugin contains a single component, named 'eventlist', which is used  to display the event timeline.  
+Its default template is very bare and raw. It is recommended to use your own markup for it to make the design  fit your needs.
 
-Here you can set up which features of Event data should be rendered in the eventlist component. Options are:
 
-#### Include Past Events
-If this is checked, events will still be displayed if they already lie in the past.
-#### Name
-Include the name of the event
-#### Description
-Include the description of the event
-#### Cover Image
-Include an image for the event
-#### Event URL
-Include a link to an external URL with possibly more information about the event. If it is an Event from Facebook, the link will point to the Event on the Facebook page. For manual events, an external URL can be added manually, but this is optional.
+## Documentation
+After installing the plugin, a new sidebar item here:
 
-### Manual Events
+**Settings -> Misc -> Facebook Events** 
 
-This tab included only a repeater form where you can manually enter data for events. The fields are self-explanatory. Images can are uploaded using the OctoberCMS Media Manager.
-At the very bottom of your list of already entered events, you will find the button 'Add new item' to add another event to your timeline.
+##### Facebook Settings Tab
+This tab offers the choice to display Facebook page events, manual entered events or even both.  
+Manual events can be maintained under the Manual Events top-menu section.   
+   
+If you want to include events from a Facebook page, you have to register a Facebook 'app' for it and enter certain credentials, to authorize your app with the Facebook API server.  
+The steps to complete for this are as follows:
 
-### Facebook Setup
-
-If you want to include Events from a Facebook page you have to register a Facebook 'app' for it and enter certain credentials here to authorize your app with the Facebook API server. The steps to complete for this are as follows:
-
-#### 1.) Create a new App
-First, we need to create a new Facebook app.
-Create an account at https://developers.facebook.com, if you don't have one. Then follow the [Facebook documentation](https://developers.facebook.com/apps/) on how to add a new app.
+###### 1.) Create a new App
+First, we need to create a new Facebook app.   
+Create an account at https://developers.facebook.com, if you don't have one.  
+Then follow the [Facebook documentation](https://developers.facebook.com/apps/) on how to add a new app.
 ![](https://github.com/ArtCodeStudio/facebookevents-october-plugin/blob/master/docs/images/Add_new_App.png)
 Choose 'Manage Business Integrations' as the app type.
-The app name is up to you.
-Enter your email and set 'Who can use your app?' to 'Just me, ...'
+The app name is up to you.    
+Enter your email and set 'Who can use your app?' to 'Just me, ...'    
 Now you are ready to create the new app.
 
-#### 2.) Setup Facebook Login
-Once you created the app, set up the 'Facebook Login': Navigate to the settings.
+###### 2.) Setup Facebook Login
+Once you created the app, set up the 'Facebook Login': Navigate to the settings.    
 The only thing we need to add here is the callback URL on your server.
-https://yourdomain.net/facebook_callback
+https://yourdomain.net/facebook_callback   
 Save Changes
 
-#### 3.) Obtain Credentials
+######  3.) Obtain Credentials
 Navigate to Settings / Basic.
 There you find the required credentials.
-Copy the 'App ID' and 'App Secret' to the OctoberCMS Facebook Events Plugin's appropriate inputs and add your Event Page name and save.
+Copy the 'App ID' and 'App Secret' to the OctoberCMS Facebook Events Plugin's (Setting -> Misc -> Facebook Events) appropriate inputs and add your Event Page name and save. Once you pressed the save button you will be redirected to Facebook to review the permissions you about to acquire.  
+After completion you'll get redirected to the Facebook Event Settings Page, where you can verify that the *App Token* field has been populated. 
+The *App Token* Info Section displays if the token is valid and when it expires.
+Here you can also renew the current token as well as change permissions.
 
-#### 4.) Obtain Credentials
+######  4.) Obtain Credentials
 Since the configuration is now done, you are ready to Login to Facebook and authorize your app.
 Click 'Click here to login' this will take you to Facebook.
 Here you select the page you like to use and click 'next'.
 Confirm the process by clicking 'done' and 'OK' on the following pages.
 After that, you get redirected to your 'Facebook Events' Plugin Settings.
 Here you can verify that the APP TOKEN field is now populated as well as the Access and Data Access Token details.
+
+##### Facebook Events Tab
+The Event Cache TTL setting defines how long Facebook page events should be cached to reduce the number of API requests to Facebook - (default: 600s = 10m)  
+The 'Fields to include section' lets you select which data should be rendered in the eventlist component.
 
 ## Custom Event Component
 To override the Plugin default component view,  
