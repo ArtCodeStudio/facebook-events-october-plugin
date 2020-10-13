@@ -1,3 +1,4 @@
+
 # October CMS Facebook Events Plugin
 
 ## About
@@ -23,23 +24,40 @@ The steps to complete for this are as follows:
 ###### 1.) Create a new App
 First, we need to create a new Facebook app.   
 Create an account at https://developers.facebook.com, if you don't have one.  
-Then follow the [Facebook documentation](https://developers.facebook.com/apps/) on how to add a new app.
-![](https://github.com/ArtCodeStudio/facebookevents-october-plugin/blob/master/docs/images/Add_new_App.png)
-Choose 'Manage Business Integrations' as the app type.
-The app name is up to you.    
-Enter your email and set 'Who can use your app?' to 'Just me, ...'    
-Now you are ready to create the new app.
+Then follow the [Facebook documentation](https://developers.facebook.com/apps/) on how to add a new app
+
+![](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/Add_new_App.png)    
+
+Choose **Manage Business Integrations** as the app type:    
+
+![https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/app_type.png](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/app_type.png)
+
+The **App Display Name** is up to you.    
+Enter your **App Contact Email** and set **App Purpose** to **Yourself or your own business**  
+Congratulation, now you are ready to click the the **Create App ID button** !
+
+![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/create_app.png)
 
 ###### 2.) Setup Facebook Login
-Once you created the app, set up the 'Facebook Login': Navigate to the settings.    
+Once you created the app,  navigate to the **Facebook Login Setting**: 
+![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/facebook_callback.png)
 The only thing we need to add here is the callback URL on your server.
 https://yourdomain.net/facebook_callback   
 Save Changes
 
 ######  3.) Obtain Credentials
-Navigate to Settings / Basic.
+Navigate to Settings / Basic:
+![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/app_setting_basic.png)
+
+
 There you find the required credentials.
-Copy the 'App ID' and 'App Secret' to the OctoberCMS Facebook Events Plugin's (Setting -> Misc -> Facebook Events) appropriate inputs and add your Event Page name and save. Once you pressed the save button you will be redirected to Facebook to review the permissions you about to acquire.  
+Copy the **App ID** and **App Secret**'to the OctoberCMS Facebook Events Plugin's (Setting -> Misc -> Facebook Events) appropriate inputs and add your Event Page name and click **Save**. 
+![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/plugin_settings.png)
+
+
+Once you pressed the **Save** button you will be redirected to Facebook to review the permissions you about to acquire. 
+
+ 
 After completion you'll get redirected to the Facebook Event Settings Page, where you can verify that the *App Token* field has been populated. 
 The *App Token* Info Section displays if the token is valid and when it expires.
 Here you can also renew the current token as well as change permissions.
