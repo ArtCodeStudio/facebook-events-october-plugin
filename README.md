@@ -9,7 +9,7 @@ The plugin contains a single component, named 'eventlist', which is used  to dis
 Its default template is very bare and raw. It is recommended to use your own markup for it to make the design  fit your needs.
 
 
-## Documentation
+## I.) Documentation
 After installing the plugin, a new sidebar item here:
 
 **Settings -> Misc -> Facebook Events** 
@@ -17,7 +17,7 @@ After installing the plugin, a new sidebar item here:
 #### Facebook Settings Tab
 This tab offers the choice to display Facebook page events, manual entered events or even both.  
 Manual events can be maintained under the Manual Events top-menu section. 
-(see Manual Events Topic below)
+*see II.) Manual Events Topic below*
    
 If you want to include events from a Facebook page, you have to register a Facebook 'app' for it and enter certain credentials, to authorize your app with the Facebook API server.  
 The steps to complete for this are as follows:
@@ -75,16 +75,16 @@ Here you can verify that the APP TOKEN field is now populated as well as the Acc
 The Event Cache TTL setting defines how long Facebook page events should be cached to reduce the number of API requests to Facebook - (default: 600s = 10m)  
 The 'Fields to include section' lets you select which data should be rendered in the eventlist component.
 
-## Manual Events
+## II.) Manual Events
 These Events are created under the Manaual Events Top Navigation Section. Here you can create new Events or edit existing:
 ![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/manual_events_section.png)
 ![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/manual_events_create_update.png)
 
 
 
-## Custom Event Component
+## III.) Custom Event Component
 To override the Plugin default component view,  
 copy the ```default.html``` from ```plugins/artandcodestudio/facebookevents/components/eventlist/default.htm``` to ```/themes/yourtheme/partials/eventlist/default.htm``` and change the markup according to your needs and wishes.
 
-## Routes
+## V.) Routes
 Facebook Callback Route: /facebook_callback
