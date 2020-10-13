@@ -20,34 +20,17 @@ window.onload = function() {
     httpRequest.send();
   }
 
-  function checkInput() {
-    if( app_id_input.value !== '' && app_secret_input.value !== '' && event_page_name_input.value !== '') {
-      $('form').request('onSave', {
-        data: {redirect:0},
-        success: function() {
-            console.log('Finished!');
-        }
-      });
-    } else {
-      console.log('some inputs missing');
-    }
-  }
-
   $('form').on('ajaxSuccess', function() {
     $('form').request('onSave', {
       data: {redirect:0},
       success: function() {
           getLoginLink( function(loginLink)
           {
-            console.log('returned: ',loginLink)
             window.location.href = loginLink;
           });
       }
     });
-    console.log('Updated!');
   })
 
-  app_id_input.addEventListener('input', checkInput);
-  app_secret_input.addEventListener('input', checkInput);
-  event_page_name_input.addEventListener('input', checkInput);
+
 };

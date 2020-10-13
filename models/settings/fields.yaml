@@ -46,13 +46,6 @@ tabs:
       tab: 'Facebook Settings'
       disabled: true
 
-    # ACCESS TOKEN INFO
-    # access_token_section:
-    #   label: Access Token Info
-    #   type: section
-    #   commentAbove: "Enter App ID, App Secret and Event Page Name"
-    #   tab: 'Facebook Settings'
-
     access_token_info:
       type: artandcodestudio_accesstokeninfo
       tab: 'Facebook Settings'
