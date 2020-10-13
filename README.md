@@ -16,7 +16,7 @@ After installing the plugin, a new sidebar item here:
 
 ##### Facebook Settings Tab
 This tab offers the choice to display Facebook page events, manual entered events or even both.  
-Manual events can be maintained under the Manual Events top-menu section.   
+Manual events can be maintained under the Manual Events top-menu section.(see Manual Events Topic below)   
    
 If you want to include events from a Facebook page, you have to register a Facebook 'app' for it and enter certain credentials, to authorize your app with the Facebook API server.  
 The steps to complete for this are as follows:
