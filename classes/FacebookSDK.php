@@ -12,8 +12,6 @@ use Cache;
 use \DateTime;
 
 
-$permissions = ['pages_read_engagement']; 
-
 class FacebookSDK {
   private $app_id;
   private $fb;
@@ -23,6 +21,7 @@ class FacebookSDK {
   private $facebook_callback;
   private $backend_url;
   private $event_page_name;
+  public const PERMISSIONS = ['pages_read_engagement']; 
   public const CACHE_PREFIX = 'facebooksdk_';
 
   /**
@@ -65,7 +64,7 @@ class FacebookSDK {
   public function getLoginURL() {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper(); 
-      $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
+      $loginUrl = $helper->getLoginUrl($this->facebook_callback, static::PERMISSIONS);
       return $loginUrl;
     }
   }
@@ -105,7 +104,7 @@ class FacebookSDK {
   public function login() {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper();
-      $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
+      $loginUrl = $helper->getLoginUrl($this->facebook_callback, static::PERMISSIONS);
 
       /**
        * Show Login Button 
