@@ -1,6 +1,6 @@
 plugin:
-  name: 'ArtAndCodeStudio.facebookevents::lang.plugin.name'
-  description: 'artandcodestudio.facebookevents::lang.plugin.description'
+  name: 'FacebookEvents'
+  description: 'Add FacebookEvents from a Facebook-Page'
   author: 'Art+Code Studio'
   icon: oc-icon-facebook
 homepage: 'https://artandcode.studio/'
