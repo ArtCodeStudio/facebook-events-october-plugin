@@ -11,6 +11,9 @@ use Carbon\Carbon;
 use Cache;
 use \DateTime;
 
+
+$permissions = ['pages_read_engagement']; 
+
 class FacebookSDK {
   private $app_id;
   private $fb;
@@ -50,7 +53,6 @@ class FacebookSDK {
   public function getLoginLink() {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper();
-      $permissions = ['email, pages_read_engagement'];
       return '<a href="' . $this->getLoginURL() . '">Click here to login</a>';
     } else {
       return '<a href="/facebook_login">Click here to login</a>';
@@ -62,8 +64,7 @@ class FacebookSDK {
    */
   public function getLoginURL() {
     if (isset($this->app_id)) {
-      $helper = $this->fb->getRedirectLoginHelper();
-      $permissions = ['email, pages_read_engagement']; 
+      $helper = $this->fb->getRedirectLoginHelper(); 
       $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
       return $loginUrl;
     }
@@ -104,7 +105,6 @@ class FacebookSDK {
   public function login() {
     if (isset($this->app_id)) {
       $helper = $this->fb->getRedirectLoginHelper();
-      $permissions = ['email, pages_read_engagement']; 
       $loginUrl = $helper->getLoginUrl($this->facebook_callback, $permissions);
 
       /**
