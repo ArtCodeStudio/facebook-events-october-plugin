@@ -95,4 +95,4 @@ Facebook Callback Route: /facebook_callback
 At some point you may encounter a message like this: 
 ![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/app_review.png)  
 
-Apps only needs to send in to review if you plan to make it public and useable by others, so this can be ignored in our case.
+Apps only need to be send in to review, if you plan to make it public and useable by others, so this can be ignored in our case.
