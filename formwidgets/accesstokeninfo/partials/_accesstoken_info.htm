@@ -18,8 +18,13 @@
       <h4>Access Token Info</h4>
     </div>
   </div>
-  <div>Token is valid</div>
-  <div>Token expires at: <?php echo $token['expires_at'];?> </div>
+  <div>Access Token is <b>valid</b></div>
+  <?php if( strcmp($token['expires_at'], '01-01-1970 00:00:00') ): ?>
+    <div>Access Token expires at: <?php echo $token['expires_at'];?> </div>
+  <?php else:?>
+    <div>Access Token expires <b>never</b> </div>
+  <?php endif;?>
+  <div>Data Access expires at: <b><?php echo $token['data_access_expires_at'];?> </b></div>
   <div>
   <hr>
     <p>Relogin to edit app permissions and refresh the access token</p>

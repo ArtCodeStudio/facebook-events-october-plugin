@@ -36,4 +36,3 @@ Route::get('/get_login_url', function () {
     $FB_sdk = new FacebookSDK();
     return $FB_sdk->getLoginURL();
 });
-
