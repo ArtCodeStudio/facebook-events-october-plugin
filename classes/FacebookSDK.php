@@ -130,7 +130,6 @@ class FacebookSDK {
     $json = file_get_contents($userIdRequestURL);
     $obj = json_decode($json);
     $userId = $obj->id;
-
     // Get permanent AccessToken
     $permanentTokenRequestUrl = "https://graph.facebook.com/v3.3/".$userId."/accounts?access_token=".$accessToken;
     $json = file_get_contents($permanentTokenRequestUrl);
