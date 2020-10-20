@@ -121,6 +121,23 @@ class FacebookSDK {
     }
   }
 
+  /***
+   * Get Permanant AccessToken
+   */
+  public function getPermananetAccessToken($accessToken) {
+    // Get User ID
+    $userIdRequestURL = "https://graph.facebook.com/v3.3/me?access_token=".$accessToken;
+    $json = file_get_contents($userIdRequestURL);
+    $obj = json_decode($json);
+    $userId = $obj->id;
+
+    // Get permanent AccessToken
+    $permanentTokenRequestUrl = "https://graph.facebook.com/v3.3/".$userId."/accounts?access_token=".$accessToken;
+    $json = file_get_contents($permanentTokenRequestUrl);
+    $obj = json_decode($json, true);
+    return $obj['data'][0]['access_token'];
+  }
+
   /**
    * Called from Facebook Login App (url need to be set in Facebook App) 
    * get access token and save to plugin settings database
@@ -139,7 +156,8 @@ class FacebookSDK {
       exit;
     }
     if (isset($accessToken)) {
-      Settings::set('access_token', (string)$accessToken);
+      $permanentAccessToken = $this->getPermananetAccessToken((string)$accessToken);
+      Settings::set('access_token', (string)$permanentAccessToken);
       echo "<script>window.location = '".$this->backend_url."'</script>";
     } else {
       $error = $helper->getError();
