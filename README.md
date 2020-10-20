@@ -85,6 +85,7 @@ These Events are created under the Manaual Events Top Navigation Section. Here y
 ## III.) Custom Event Component
 To override the Plugin default component view,  
 copy the ```default.html``` from ```plugins/artandcodestudio/facebookevents/components/eventlist/default.htm``` to ```/themes/yourtheme/partials/eventlist/default.htm``` and change the markup according to your needs and wishes.
+see ![OctoberCMS Documentation](https://octobercms.com/docs/cms/components#overriding-partials)
 
 ## IV.) Routes
 Facebook Callback Route: /facebook_callback
