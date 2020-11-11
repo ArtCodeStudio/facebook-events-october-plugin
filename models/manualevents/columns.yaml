@@ -1,21 +1,21 @@
 columns:
   name:
-    label: Event Name
+    label: artandcodestudio.facebookevents::lang.manualevents.event_name
     type: text
     required: 1
   description:
     type: text
-    label: Description
+    label: artandcodestudio.facebookevents::lang.manualevents.description
   image:
     type: text
-    label: Image
+    label: artandcodestudio.facebookevents::lang.manualevents.image
   external_url:
     type: text
-    label: External URL
+    label: artandcodestudio.facebookevents::lang.manualevents.external_url
   start_time:
     type: dateTime
-    label: Starting time
+    label: artandcodestudio.facebookevents::lang.manualevents.start_time
   end_time:
     type: dateTime
     mode: datetime
-    label: Ending time
+    label: artandcodestudio.facebookevents::lang.manualevents.end_time
