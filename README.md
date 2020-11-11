@@ -1,21 +1,8 @@
-
-# October CMS Facebook Events Plugin
-
-## About
-
-This plugin allows you to announce upcoming events on your website,  which can be either manually created or automatically pulled from a Facebook page event. You may also mix both modes. 
-
-The plugin contains a single component, named 'eventlist', which is used  to display the event timeline.  
-Its default template is very bare and raw. It is recommended to use your own markup for it to make the design  fit your needs.
-
-
 ## I.) Documentation
-After installing the plugin, a new sidebar item here:
-
-**Settings -> Misc -> Facebook Events** 
+After installing the plugin you will find settings for the Facebook Events in **Settings -> Misc -> Facebook Events** and an additional item "Manual Events" in the backend top navigation.
 
 #### Facebook Settings Tab
-This tab offers the choice to display Facebook page events, manual entered events or even both.  
+This tab offers the choice to display Facebook page events, manual entered events or both.
 Manual events can be maintained under the Manual Events top-menu section. 
 *see II.) Manual Events Topic below*
    
@@ -23,13 +10,13 @@ If you want to include events from a Facebook page, you have to register a Faceb
 The steps to complete for this are as follows:
 
 ##### 1.) Create a new App
-First, we need to create a new Facebook app.   
-Create an account at https://developers.facebook.com, if you don't have one.  
-Then follow the [Facebook documentation](https://developers.facebook.com/apps/) on how to add a new app
+First, we need to create a new Facebook app.
+Create an account at https://developers.facebook.com, if you don't have one.
+Then follow the [Facebook documentation](https://developers.facebook.com/apps/) on how to add a new app.
 
-![](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/Add_new_App.png)    
+![](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/Add_new_App.png)
 
-Choose **Manage Business Integrations** as the app type:    
+Choose **Manage Business Integrations** as the app type:
 
 ![https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/app_type.png](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/app_type.png)
 
@@ -95,4 +82,4 @@ Facebook Callback Route: /facebook_callback
 At some point you may encounter a message like this: 
 ![enter image description here](https://raw.githubusercontent.com/ArtCodeStudio/facebookevents-october-plugin/master/docs/images/app_review.png)  
 
-Apps only need to be send into review, if you plan to make it public and usable by others, so this can be ignored in our case.
+Apps only need to be sent into review if you plan to make it public and usable by others, so this can be ignored in our case.
